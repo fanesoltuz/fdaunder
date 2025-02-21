@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDA Underwear</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #222;
+            color: white;
+            padding: 1rem;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            padding: 0;
+        }
+        .nav-links li {
+            margin: 0 10px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 200px;
+        }
+        .product img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .about, .contact {
+            padding: 20px;
+            background: white;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                background: #222;
+                width: 100%;
+                top: 50px;
+                left: 0;
+                padding: 10px;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="logo">FDA Underwear</h1>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links">
+            <li><a href="#store">Magazin</a></li>
+            <li><a href="#about">Despre noi</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <section id="store" class="store">
+        <div class="products">
+            <div class="product">
+                <img src="/images/model1.jpg" alt="Model 1">
+                <h2>Model 1</h2>
+                <p>99 RON</p>
+                <button>Adaugă în coș</button>
+            </div>
+            <div class="product">
+                <img src="/images/model2.jpg" alt="Model 2">
+                <h2>Model 2</h2>
+                <p>89 RON</p>
+                <button>Adaugă în coș</button>
+            </div>
+            <div class="product">
+                <img src="/images/model3.jpg" alt="Model 3">
+                <h2>Model 3</h2>
+                <p>79 RON</p>
+                <button>Adaugă în coș</button>
+            </div>
+            <div class="product">
+                <img src="/images/model4.jpg" alt="Model 4">
+                <h2>Model 4</h2>
+                <p>109 RON</p>
+                <button>Adaugă în coș</button>
+            </div>
+            <div class="product">
+                <img src="/images/model5.jpg" alt="Model 5">
+                <h2>Model 5</h2>
+                <p>119 RON</p>
+                <button>Adaugă în coș</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>Despre noi</h2>
+        <p>FDA este un brand de lenjerie masculină modern, creat pentru confort și stil.</p>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact</h2>
+        <p>Ne poți contacta la <a href="mailto:contact@fda.com">contact@fda.com</a></p>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".nav-links").classList.toggle("show");
+        }
+    </script>
+</body>
+</html>
