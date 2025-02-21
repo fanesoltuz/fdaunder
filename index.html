@@ -5,23 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Underwear Brand</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5; }
-        header { background-color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; }
-        nav ul li a { text-decoration: none; color: #333; font-weight: bold; }
-        nav ul li a:hover { color: #000; }
-        .hero { background: url('https://via.placeholder.com/1200x600?text=Discover+Our+Collection') center/cover no-repeat; height: 60vh; display: flex; justify-content: center; align-items: center; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .hero h1 { font-size: 3em; animation: fadeIn 2s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
-        .product-card { background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s; }
-        .product-card:hover { transform: translateY(-10px); }
-        .product-card img { width: 100%; }
-        .product-card h2 { padding: 10px; font-size: 1.2em; }
-        .product-card p { padding: 0 10px; color: #666; }
-        .product-card button { display: block; width: 90%; margin: 10px auto; padding: 10px; background: black; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
-        .product-card button:hover { background: #444; }
-        footer { background: #333; color: white; text-align: center; padding: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://raw.githubusercontent.com/utilizator/repository/main/images/background.jpg') center/cover no-repeat;
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #000;
+        }
+        .hero {
+            background: url('https://raw.githubusercontent.com/utilizator/repository/main/images/hero.jpg') center/cover no-repeat;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero h1 {
+            font-size: 3em;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        .product-card img {
+            width: 100%;
+        }
+        .product-card h2 {
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        .product-card p {
+            padding: 0 10px;
+            color: #666;
+        }
+        .product-card button {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .product-card button:hover {
+            background: #444;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -41,25 +119,25 @@
     </section>
     <section class="products">
         <div class="product-card">
-            <img src="https://via.placeholder.com/300x400?text=Model+1" alt="Model 1">
+            <img src="https://raw.githubusercontent.com/utilizator/repository/main/images/model1.jpg" alt="Model 1">
             <h2>Model 1</h2>
             <p>Comfortable and stylish.</p>
             <button>Buy Now</button>
         </div>
         <div class="product-card">
-            <img src="https://via.placeholder.com/300x400?text=Model+2" alt="Model 2">
+            <img src="https://raw.githubusercontent.com/utilizator/repository/main/images/model2.jpg" alt="Model 2">
             <h2>Model 2</h2>
             <p>Comfortable and stylish.</p>
             <button>Buy Now</button>
         </div>
         <div class="product-card">
-            <img src="https://via.placeholder.com/300x400?text=Model+3" alt="Model 3">
+            <img src="https://raw.githubusercontent.com/utilizator/repository/main/images/model3.jpg" alt="Model 3">
             <h2>Model 3</h2>
             <p>Comfortable and stylish.</p>
             <button>Buy Now</button>
         </div>
         <div class="product-card">
-            <img src="https://via.placeholder.com/300x400?text=Model+4" alt="Model 4">
+            <img src="https://raw.githubusercontent.com/utilizator/repository/main/images/model4.jpg" alt="Model 4">
             <h2>Model 4</h2>
             <p>Comfortable and stylish.</p>
             <button>Buy Now</button>
