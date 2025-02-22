@@ -53,38 +53,40 @@
             color: #333;
         }
         .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-        .cart-item img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-        .cart-item span {
-            font-weight: bold;
-            color: #333;
-            margin-left: 10px;
-        }
-        .cart-item button {
-            background: #f04e31;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .cart-item button:hover {
-            background: #c63a24;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.cart-item span {
+    flex-grow: 1;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.cart-item button {
+    background: #f04e31;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.cart-item button:hover {
+    background: #c63a24;
+}
+         
         .empty-cart {
             text-align: center;
             color: #666;
@@ -151,27 +153,28 @@
     <script>
         emailjs.init("YOUR_USER_ID"); // Inlocuieste cu user_id de la EmailJS
 
-        function loadCartItems() {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartItemsContainer = document.getElementById("cart-items");
+       function loadCartItems() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsContainer = document.getElementById("cart-items");
 
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="empty-cart">Coșul este gol.</p>';
-                return;
-            }
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart">Coșul este gol.</p>';
+        return;
+    }
 
-            cartItemsContainer.innerHTML = '';
-            cart.forEach((product, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.classList.add('cart-item');
-                itemDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <span>${product.name}</span>
-                    <button onclick="removeFromCart(${index})">Șterge</button>
-                `;
-                cartItemsContainer.appendChild(itemDiv);
-            });
-        }
+    cartItemsContainer.innerHTML = '';
+    cart.forEach((product, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+        itemDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <span>${product.name}</span>
+            <span>${product.price}</span>
+            <button onclick="removeFromCart(${index})">Șterge</button>
+        `;
+        cartItemsContainer.appendChild(itemDiv);
+    });
+}
 
         function removeFromCart(index) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
