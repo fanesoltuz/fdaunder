@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Slider</title>
+    <title>FDA Underwear</title>
     <style>
-        /* Stilul pentru body */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background: url('https://raw.githubusercontent.com/utilizator/repository/main/images/background.jpg') center/cover no-repeat;
         }
-
-        /* Stilul header-ului */
         header {
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -23,8 +20,6 @@
             top: 0;
             z-index: 1000;
         }
-
-        /* Stilul pentru navigare */
         nav ul {
             list-style: none;
             padding: 0;
@@ -32,64 +27,21 @@
             justify-content: center;
             gap: 20px;
         }
-
         nav ul li a {
             text-decoration: none;
             color: #333;
             font-weight: bold;
         }
-
         nav ul li a:hover {
             color: #000;
         }
 
-        /* Stilul pentru slider */
-        .slider {
-            width: 100%;                /* Sliderul va ocupa întreaga lățime a ecranului */
-            overflow: hidden;           /* Ascunde orice parte a imaginii care depășește containerul */
-            position: relative;         /* Poziționarea relativă a containerului pentru imagini */
-            margin-bottom: 20px;        /* Spațiu între slider și secțiunea următoare */
-        }
-
-        /* Stilul pentru imaginile slider-ului */
-        .slider img {
-            width: 100%;                /* Lățimea imaginii va fi 100% din container */
-            height: auto;               /* Înălțimea va fi ajustată pentru a păstra proporțiile */
-            object-fit: cover;          /* Imaginea va umple containerul fără a se distorsiona */
-            max-height: 100vh;          /* Înălțimea maximă va fi 100% din înălțimea ferestrei vizibile */
-            display: block;             /* Asigură că imaginea ocupă întreaga lățime a containerului */
-            margin: 0 auto;             /* Aliniere pe centru */
-        }
-
-        /* Media Queries pentru telefoane mobile */
-        @media (max-width: 768px) {
-            .slider img {
-                max-height: 60vh;        /* Ajustează înălțimea pentru dispozitivele mici */
-            }
-        }
-
-        /* Media Queries pentru tablete */
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .slider img {
-                max-height: 70vh;        /* Ajustează pentru tablete */
-            }
-        }
-
-        /* Media Queries pentru desktop */
-        @media (min-width: 1024px) {
-            .slider img {
-                max-height: 100vh;       /* Păstrează înălțimea completă pe desktop-uri */
-            }
-        }
-
-        /* Stilul secțiunii de produse */
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             padding: 20px;
         }
-
         .product-card {
             background: #fff;
             border-radius: 10px;
@@ -97,25 +49,20 @@
             overflow: hidden;
             transition: transform 0.3s;
         }
-
         .product-card:hover {
             transform: translateY(-10px);
         }
-
         .product-card img {
             width: 100%;
         }
-
         .product-card h2 {
             padding: 10px;
             font-size: 1.2em;
         }
-
         .product-card p {
             padding: 0 10px;
             color: #666;
         }
-
         .product-card button {
             display: block;
             width: 90%;
@@ -128,24 +75,44 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-
         .product-card button:hover {
             background: #444;
         }
-
-        /* Stilul footer-ului */
         footer {
             background: #333;
             color: white;
             text-align: center;
             padding: 10px;
         }
+
+        /* Slider Styles */
+        .slider {
+            max-width: 80%;
+            
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+            height: 400px;
+        }
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slider img.active {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>Underwear Brand</h1>
+        <h1> FDA Underwear </h1>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
@@ -158,13 +125,13 @@
 
     <!-- Slider Section -->
     <div class="slider">
-        <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/nouacolectie/nouacolectie.jpg" alt="Slider Image 1">
-        <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie1.jpeg" alt="Slider Image 1">
+        <img class="active" src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/altacolectie/colectie.PNG" alt="Slider Image 0">
+         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie1.jpeg" alt="Slider Image 1">
         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie2.jpeg" alt="Slider Image 2">
         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie3.jpeg" alt="Slider Image 3">
+        <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie4.jpeg" alt="Slider Image 4">
     </div>
 
-    <!-- Produse Section -->
     <section class="products">
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
@@ -193,8 +160,26 @@
     </section>
 
     <footer>
-        © 2025 Underwear Brand. All rights reserved.
+        © 2025 FDA Underwear Brand. All rights reserved.
     </footer>
 
+    <script>
+        const sliderImages = document.querySelectorAll(".slider img");
+        let currentIndex = 0;
+
+        function changeImage() {
+            // Remove 'active' class from current image
+            sliderImages[currentIndex].classList.remove("active");
+
+            // Move to next image
+            currentIndex = (currentIndex + 1) % sliderImages.length;
+
+            // Add 'active' class to new image
+            sliderImages[currentIndex].classList.add("active");
+        }
+
+        // Start the slider
+        setInterval(changeImage, 3000);
+    </script>
 </body>
 </html>
