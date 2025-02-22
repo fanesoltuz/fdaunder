@@ -39,49 +39,84 @@
             color: #f04e31;
         }
 
-        /* Cart Section */
+        /* Cart Styling */
         .cart-container {
             max-width: 800px;
-            margin: 50px auto;
+            margin: 30px auto;
             background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             padding: 20px;
+        }
+        .cart-container h2 {
+            text-align: center;
+            color: #333;
         }
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
         }
         .cart-item:last-child {
             border-bottom: none;
         }
         .cart-item img {
-            width: 100px;
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
         }
-        .cart-item h2 {
-            font-size: 1.1em;
+        .cart-item span {
+            font-weight: bold;
+            color: #333;
+            margin-left: 10px;
         }
         .cart-item button {
             background: #f04e31;
             color: white;
             border: none;
-            border-radius: 5px;
             padding: 5px 10px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
         }
         .cart-item button:hover {
             background: #c63a24;
         }
-
         .empty-cart {
             text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Form Styling */
+        .checkout-form {
+            margin-top: 20px;
             padding: 20px;
-            color: #777;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+        .checkout-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .checkout-form button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .checkout-form button:hover {
+            background: #218838;
         }
     </style>
 </head>
@@ -99,46 +134,68 @@
     </header>
 
     <div class="cart-container">
-        <h2>Produsele din coș:</h2>
-        <div id="cart-items">
-            <p class="empty-cart">Coșul tău este gol.</p>
-        </div>
+        <h2>Produse în Coș</h2>
+        <div id="cart-items"></div>
     </div>
 
+    <div class="checkout-form">
+        <h2>Detalii Client</h2>
+        <input type="text" id="firstName" placeholder="Nume" required>
+        <input type="text" id="lastName" placeholder="Prenume" required>
+        <input type="tel" id="phone" placeholder="Număr de telefon" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button onclick="submitOrder()">Trimite Comanda</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
     <script>
+        emailjs.init("YOUR_USER_ID"); // Inlocuieste cu user_id de la EmailJS
+
         function loadCartItems() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             const cartItemsContainer = document.getElementById("cart-items");
-            cartItemsContainer.innerHTML = "";
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `<p class="empty-cart">Coșul tău este gol.</p>`;
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Coșul este gol.</p>';
                 return;
             }
 
-            cart.forEach((item, index) => {
-                const cartItem = document.createElement("div");
-                cartItem.classList.add("cart-item");
-
-                cartItem.innerHTML = `
-                    <h2>${item}</h2>
+            cartItemsContainer.innerHTML = '';
+            cart.forEach((product, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('cart-item');
+                itemDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <span>${product.name}</span>
                     <button onclick="removeFromCart(${index})">Șterge</button>
                 `;
-                cartItemsContainer.appendChild(cartItem);
+                cartItemsContainer.appendChild(itemDiv);
             });
         }
 
         function removeFromCart(index) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.splice(index, 1); // Șterge produsul de la index-ul specificat
+            cart.splice(index, 1);
             localStorage.setItem("cart", JSON.stringify(cart));
-            updateCartCount();
-            loadCartItems(); // Reîncarcă produsele din coș
+            loadCartItems();
         }
 
-        function updateCartCount() {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            document.getElementById("cart-count").textContent = cart.length;
+        function submitOrder() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const phone = document.getElementById("phone").value;
+            const email = document.getElementById("email").value;
+
+            let templateParams = {
+                name: firstName + ' ' + lastName,
+                phone: phone,
+                email: email,
+                order: JSON.stringify(JSON.parse(localStorage.getItem("cart")))
+            };
+
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(() => alert("Comanda a fost trimisă!"))
+                .catch(() => alert("A apărut o eroare."));
         }
 
         window.onload = function() {
