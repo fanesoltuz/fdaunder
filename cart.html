@@ -1,209 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FDA Underwear - Coș de Cumpărături</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f9;
-        }
-
-        /* Header Styling */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        nav ul li a:hover {
-            color: #f04e31;
-        }
-
-        /* Cart Styling */
-        .cart-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .cart-container h2 {
-            text-align: center;
-            color: #333;
-        }
-        .cart-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.cart-item img {
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
-    margin-right: 15px;
-}
-
-.cart-item span {
-    flex-grow: 1;
-    font-size: 1.1em;
-    color: #333;
-}
-
-.cart-item button {
-    background: #f04e31;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.cart-item button:hover {
-    background: #c63a24;
-}
-         
-        .empty-cart {
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            margin-top: 20px;
-        }
-
-        /* Form Styling */
-        .checkout-form {
-            margin-top: 20px;
-            padding: 20px;
-            background: #fafafa;
-            border-radius: 10px;
-        }
-        .checkout-form input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .checkout-form button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .checkout-form button:hover {
-            background: #218838;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FDA Underwear - Coș de Cumpărături</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+    }
+    /* Header Styling */
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #f04e31;
+    }
+    /* Cart Container Styling */
+    .cart-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .cart-container h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 5px;
+      margin-right: 15px;
+    }
+    .cart-item span {
+      flex-grow: 1;
+      font-size: 1.1em;
+      color: #333;
+    }
+    .cart-item button {
+      background: #f04e31;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cart-item button:hover {
+      background: #c63a24;
+    }
+    .empty-cart {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      margin-top: 20px;
+    }
+    /* Clear All Button */
+    .clear-all-btn {
+      margin-top: 20px;
+      background: #f04e31;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .clear-all-btn:hover {
+      transform: scale(1.1);
+      background-color: red;
+    }
+    /* Checkout Form Styling */
+    .checkout-form {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 10px;
+    }
+    .checkout-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    .checkout-form button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .checkout-form button:hover {
+      background: #218838;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>FDA Underwear - Coș de Cumpărături</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>FDA Underwear - Coș de Cumpărături</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="cart-container">
-        <h2>Produse în Coș</h2>
-        <div id="cart-items"></div>
-    </div>
+  <div class="cart-container">
+    <h2>Produse în Coș</h2>
+    <div id="cart-items"></div>
+    <button class="clear-all-btn" onclick="clearCart()">Clear All</button>
+  </div>
 
-    <div class="checkout-form">
-        <h2>Detalii Client</h2>
-        <input type="text" id="firstName" placeholder="Nume" required>
-        <input type="text" id="lastName" placeholder="Prenume" required>
-        <input type="tel" id="phone" placeholder="Număr de telefon" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <button onclick="submitOrder()">Trimite Comanda</button>
-    </div>
+  <div class="checkout-form">
+    <h2>Detalii Client</h2>
+    <input type="text" id="firstName" placeholder="Nume" required>
+    <input type="text" id="lastName" placeholder="Prenume" required>
+    <input type="tel" id="phone" placeholder="Număr de telefon" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <button onclick="submitOrder()">Trimite Comanda</button>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
-    <script>
-        emailjs.init("YOUR_USER_ID"); // Inlocuieste cu user_id de la EmailJS
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+  <script>
+    emailjs.init("YOUR_USER_ID"); // Înlocuiește cu user_id de la EmailJS
 
-       function loadCartItems() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartItemsContainer = document.getElementById("cart-items");
+    function loadCartItems() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartItemsContainer = document.getElementById("cart-items");
 
-    if (cart.length === 0) {
+      if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart">Coșul este gol.</p>';
         return;
-    }
+      }
 
-    cartItemsContainer.innerHTML = '';
-    cart.forEach((product, index) => {
+      cartItemsContainer.innerHTML = '';
+      cart.forEach((product, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.classList.add('cart-item');
         itemDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <span>${product.name}</span>
-            <span>${product.price}</span>
-            <button onclick="removeFromCart(${index})">Șterge</button>
+          <img src="${product.image}" alt="${product.name}">
+          <span>${product.name}</span>
+          <span>${product.price}</span>
+          <button onclick="removeFromCart(${index})">Șterge</button>
         `;
         cartItemsContainer.appendChild(itemDiv);
-    });
-}
+      });
+    }
 
-        function removeFromCart(index) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.splice(index, 1);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCartItems();
-        }
+    function removeFromCart(index) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCartItems();
+    }
 
-        function submitOrder() {
-            const firstName = document.getElementById("firstName").value;
-            const lastName = document.getElementById("lastName").value;
-            const phone = document.getElementById("phone").value;
-            const email = document.getElementById("email").value;
+    function clearCart() {
+      localStorage.removeItem("cart");
+      loadCartItems();
+    }
 
-            let templateParams = {
-                name: firstName + ' ' + lastName,
-                phone: phone,
-                email: email,
-                order: JSON.stringify(JSON.parse(localStorage.getItem("cart")))
-            };
+    function submitOrder() {
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
 
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-                .then(() => alert("Comanda a fost trimisă!"))
-                .catch(() => alert("A apărut o eroare."));
-        }
+      let templateParams = {
+        name: firstName + ' ' + lastName,
+        phone: phone,
+        email: email,
+        order: JSON.stringify(JSON.parse(localStorage.getItem("cart")))
+      };
 
-        window.onload = function() {
-            loadCartItems();
-        }
-    </script>
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then(() => alert("Comanda a fost trimisă!"))
+        .catch(() => alert("A apărut o eroare."));
+    }
+
+    window.onload = function() {
+      loadCartItems();
+    }
+  </script>
 </body>
 </html>
