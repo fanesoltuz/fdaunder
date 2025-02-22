@@ -3,126 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - Underwear Brand</title>
+    <title>FDA Underwear - Shop</title>
     <style>
-        /* Reset general */
-        body, h1, h2, h3, p {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            background: url('https://raw.githubusercontent.com/utilizator/repository/main/images/background.jpg') center/cover no-repeat;
         }
-
-        /* Stiluri generale */
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-
         header {
-            background-color: #000;
-            color: white;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-
-        header h1 {
-            font-size: 2.5em;
-        }
-
         nav ul {
             list-style: none;
             padding: 0;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            color: #ddd;
-        }
-
-        section {
-            padding: 50px 10%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #000;
+        }
 
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
         .product-card {
-            background-color: white;
+            background: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            transition: transform 0.3s ease;
-            padding: 20px;
-            text-align: center;
+            transition: transform 0.3s;
         }
-
         .product-card:hover {
             transform: translateY(-10px);
         }
-
         .product-card img {
             width: 100%;
-            border-radius: 10px;
             height: auto;
         }
-
-        .product-card h3 {
-            font-size: 1.5em;
-            margin: 20px 0;
+        .product-card h2 {
+            padding: 10px;
+            font-size: 1.2em;
         }
-
         .product-card p {
-            color: #777;
-            margin-bottom: 20px;
+            padding: 0 10px;
+            color: #666;
         }
-
         .product-card button {
-            background-color: #000;
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            background: black;
             color: white;
             border: none;
-            padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s;
         }
-
         .product-card button:hover {
-            background-color: #444;
+            background: #444;
         }
-
         footer {
-            background-color: #333;
+            background: #333;
             color: white;
             text-align: center;
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            padding: 10px;
         }
 
-        /* Responsivitate pentru dispozitive mobile */
-        @media screen and (max-width: 768px) {
-            section {
-                padding: 20px 5%;
-            }
+        /* Coșul de cumpărături - styling */
+        .cart-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+        }
+        .cart-icon span {
+            font-size: 18px;
+            color: red;
+            background: white;
+            border-radius: 50%;
+            padding: 2px 6px;
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>Underwear Brand</h1>
+        <h1> FDA Underwear - Shop </h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -131,47 +113,65 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
+        <!-- Coșul de cumpărături - icon -->
+        <div class="cart-icon" id="cart-icon">
+            <a href="cart.html">
+                <span>🛒</span> 
+                <span id="cart-count">0</span>
+            </a>
+        </div>
     </header>
 
-    <section>
-        <h2>Our Shop</h2>
-
-        <!-- Produs 1 -->
+    <section class="products">
         <div class="product-card">
-            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Product 1">
-            <h3>Model 1</h3>
-            <p>Comfortable and stylish, perfect for everyday wear.</p>
-            <button>Buy Now</button>
+            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
+            <h2>SPHYNX PYRAMIDS</h2>
+            <p>Comfortable and stylish.</p>
+            <button onclick="addToCart('SPHYNX PYRAMIDS')">Adaugă în Coș</button>
         </div>
-
-        <!-- Produs 2 -->
         <div class="product-card">
-            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="Product 2">
-            <h3>Model 2</h3>
-            <p>Soft fabric and sleek design for ultimate comfort.</p>
-            <button>Buy Now</button>
+            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="Model 2">
+            <h2>THE ZAZA KINGDOM</h2>
+            <p>Comfortable and stylish.</p>
+            <button onclick="addToCart('THE ZAZA KINGDOM')">Adaugă în Coș</button>
         </div>
-
-        <!-- Produs 3 -->
         <div class="product-card">
-            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Product 3">
-            <h3>Model 3</h3>
-            <p>Stylish, elegant, and great for any occasion.</p>
-            <button>Buy Now</button>
+            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Model 3">
+            <h2>MONEY RAIN</h2>
+            <p>Comfortable and stylish.</p>
+            <button onclick="addToCart('MONEY RAIN')">Adaugă în Coș</button>
         </div>
-
-        <!-- Produs 4 -->
         <div class="product-card">
-            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Product 4">
-            <h3>Model 4</h3>
-            <p>Durable, comfortable, and perfect for your daily routine.</p>
-            <button>Buy Now</button>
+            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Model 4">
+            <h2>RIO DE JANEIRO</h2>
+            <p>Comfortable and stylish.</p>
+            <button onclick="addToCart('RIO DE JANEIRO')">Adaugă în Coș</button>
         </div>
     </section>
 
     <footer>
-        <p>© 2025 Underwear Brand. All rights reserved.</p>
+        © 2025 FDA Underwear Brand. All rights reserved.
     </footer>
 
+    <script>
+        // Funcție pentru a adăuga produse în coș
+        function addToCart(productName) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(productName);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // Funcție pentru a actualiza numărul de produse din coș
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cart-count").textContent = cart.length;
+        }
+
+        // La încărcarea paginii, actualizăm numărul de produse din coș
+        window.onload = function() {
+            updateCartCount();
+        }
+    </script>
 </body>
 </html>
