@@ -9,8 +9,10 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url('https://raw.githubusercontent.com/utilizator/repository/main/images/background.jpg') center/cover no-repeat;
+            background: #f4f4f9;
         }
+
+        /* Header Styling */
         header {
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -31,11 +33,13 @@
             text-decoration: none;
             color: #333;
             font-weight: bold;
+            transition: color 0.3s;
         }
         nav ul li a:hover {
-            color: #000;
+            color: #f04e31;
         }
 
+        /* Products Grid */
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -44,17 +48,22 @@
         }
         .product-card {
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
         .product-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
         }
         .product-card img {
             width: 100%;
-            height: auto;
+            transition: transform 0.5s;
+        }
+        .product-card:hover img {
+            transform: scale(1.1);
         }
         .product-card h2 {
             padding: 10px;
@@ -69,7 +78,7 @@
             width: 90%;
             margin: 10px auto;
             padding: 10px;
-            background: black;
+            background: #f04e31;
             color: white;
             border: none;
             border-radius: 5px;
@@ -77,16 +86,10 @@
             transition: background 0.3s;
         }
         .product-card button:hover {
-            background: #444;
+            background: #c63a24;
         }
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-
-        /* Coșul de cumpărături - styling */
+        
+        /* Cart Icon */
         .cart-icon {
             position: absolute;
             top: 20px;
@@ -99,6 +102,25 @@
             background: white;
             border-radius: 50%;
             padding: 2px 6px;
+        }
+
+        /* Notification Popup */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -135,40 +157,34 @@
             <p>Comfortable and stylish.</p>
             <button onclick="addToCart('THE ZAZA KINGDOM')">Adaugă în Coș</button>
         </div>
-        <div class="product-card">
-            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Model 3">
-            <h2>MONEY RAIN</h2>
-            <p>Comfortable and stylish.</p>
-            <button onclick="addToCart('MONEY RAIN')">Adaugă în Coș</button>
-        </div>
-        <div class="product-card">
-            <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Model 4">
-            <h2>RIO DE JANEIRO</h2>
-            <p>Comfortable and stylish.</p>
-            <button onclick="addToCart('RIO DE JANEIRO')">Adaugă în Coș</button>
-        </div>
     </section>
 
-    <footer>
-        © 2025 FDA Underwear Brand. All rights reserved.
-    </footer>
+    <div class="notification" id="notification">
+        Produsul a fost adăugat în coș!
+    </div>
 
     <script>
-        // Funcție pentru a adăuga produse în coș
         function addToCart(productName) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             cart.push(productName);
             localStorage.setItem("cart", JSON.stringify(cart));
             updateCartCount();
+            showNotification();
         }
 
-        // Funcție pentru a actualiza numărul de produse din coș
         function updateCartCount() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             document.getElementById("cart-count").textContent = cart.length;
         }
 
-        // La încărcarea paginii, actualizăm numărul de produse din coș
+        function showNotification() {
+            const notification = document.getElementById("notification");
+            notification.classList.add("show");
+            setTimeout(() => {
+                notification.classList.remove("show");
+            }, 2000);
+        }
+
         window.onload = function() {
             updateCartCount();
         }
