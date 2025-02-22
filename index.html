@@ -88,6 +88,7 @@
         /* Slider Styles */
         .slider {
             max-width: 80%;
+            
             margin: 20px auto;
             overflow: hidden;
             border-radius: 10px;
@@ -107,19 +108,6 @@
         .slider img.active {
             opacity: 1;
         }
-
-        /* Coș icon */
-        .cart-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            background-color: #f1f1f1;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
     </style>
 </head>
 <body>
@@ -134,18 +122,18 @@
             </ul>
         </nav>
         <!-- Coșul de cumpărături - icon -->
-        <div class="cart-icon">
-            <a href="cart.html">
-                <span>🛒</span> 
-                <span id="cart-count">0</span>
-            </a>
-        </div>
+<div class="cart-icon">
+    <a href="cart.html">
+        <span>🛒</span> 
+        <span id="cart-count">0</span>
+    </a>
+</div>
     </header>
 
     <!-- Slider Section -->
     <div class="slider">
         <img class="active" src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/nouacolectie2/nouacolectie2.jpg" alt="Slider Image 0">
-        <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie1.jpeg" alt="Slider Image 1">
+         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie1.jpeg" alt="Slider Image 1">
         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie2.jpeg" alt="Slider Image 2">
         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie3.jpeg" alt="Slider Image 3">
         <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie4.jpeg" alt="Slider Image 4">
@@ -156,59 +144,50 @@
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
             <h2>SPHYNX PYRAMIDS</h2>
             <p>Comfortable and stylish.</p>
-            <button class="add-to-cart" data-product-id="1" data-product-name="SPHYNX PYRAMIDS" data-product-price="100" data-product-image="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg">Adaugă în coș</button>
+           
         </div>
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="Model 2">
             <h2>THE ZAZA KINGDOM</h2>
             <p>Comfortable and stylish.</p>
-            <button class="add-to-cart" data-product-id="2" data-product-name="THE ZAZA KINGDOM" data-product-price="120" data-product-image="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg">Adaugă în coș</button>
+           
         </div>
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Model 3">
             <h2>MONEY RAIN</h2>
             <p>Comfortable and stylish.</p>
-            <button class="add-to-cart" data-product-id="3" data-product-name="MONEY RAIN" data-product-price="130" data-product-image="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg">Adaugă în coș</button>
+            
         </div>
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Model 4">
             <h2>RIO DE JANEIRO</h2>
             <p>Comfortable and stylish.</p>
-            <button class="add-to-cart" data-product-id="4" data-product-name="RIO DE JANEIRO" data-product-price="140" data-product-image="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg">Adaugă în coș</button>
+            
         </div>
     </section>
+    
 
     <footer>
         © 2025 FDA Underwear Brand. All rights reserved.
     </footer>
 
     <script>
-        const cartCountElement = document.getElementById("cart-count");
-        const addToCartButtons = document.querySelectorAll(".add-to-cart");
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const sliderImages = document.querySelectorAll(".slider img");
+        let currentIndex = 0;
 
-        // Update cart icon
-        function updateCartIcon() {
-            cartCountElement.textContent = cart.length;
+        function changeImage() {
+            // Remove 'active' class from current image
+            sliderImages[currentIndex].classList.remove("active");
+
+            // Move to next image
+            currentIndex = (currentIndex + 1) % sliderImages.length;
+
+            // Add 'active' class to new image
+            sliderImages[currentIndex].classList.add("active");
         }
 
-        // Add product to cart
-        addToCartButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                const product = {
-                    id: button.getAttribute("data-product-id"),
-                    name: button.getAttribute("data-product-name"),
-                    price: button.getAttribute("data-product-price"),
-                    image: button.getAttribute("data-product-image")
-                };
-                cart.push(product);
-                localStorage.setItem("cart", JSON.stringify(cart));
-                updateCartIcon();
-            });
-        });
-
-        // Initial cart icon update
-        updateCartIcon();
+        // Start the slider
+        setInterval(changeImage, 3000);
     </script>
 </body>
 </html>
