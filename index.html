@@ -36,7 +36,6 @@
             color: #000;
         }
         .hero {
-            position: relative;
             background: url('https://raw.githubusercontent.com/utilizator/repository/main/images/hero.jpg') center/cover no-repeat;
             height: 60vh;
             display: flex;
@@ -47,15 +46,11 @@
         }
         .hero h1 {
             font-size: 3em;
-            position: absolute;
-            color: white;
-            font-size: 3em;
-            text-align: center;
-            z-index: 10;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .products {
             display: grid;
@@ -108,25 +103,23 @@
 
         /* Slider Styles */
         .slider {
-            position: relative;
             max-width: 80%;
             margin: 20px auto;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
-
         .slider img {
             width: 100%;
             height: auto;
+            object-fit: cover;
             position: absolute;
             top: 0;
             left: 0;
-            object-fit: cover;
             transition: opacity 1s ease-in-out;
             opacity: 0;
         }
-
         .slider img.active {
             opacity: 1;
         }
