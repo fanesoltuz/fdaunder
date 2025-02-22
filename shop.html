@@ -51,6 +51,7 @@
             text-decoration: none;
             font-weight: bold;
             transition: background 0.3s;
+            z-index: 999;
         }
         .cart-icon:hover {
             background: #c63a24;
@@ -126,12 +127,10 @@
         </nav>
     </header>
 
-    <!-- Coșul de cumpărături - icon -->
-    <div class="cart-icon">
-        <a href="cart.html">
-            🛒 Coș (<span id="cart-count">0</span>)
-        </a>
-    </div>
+    <!-- Coșul de cumpărături - Icon -->
+    <a class="cart-icon" href="cart.html">
+        🛒 Coș (<span id="cart-count">0</span>)
+    </a>
 
     <section class="products">
         <div class="product-card">
