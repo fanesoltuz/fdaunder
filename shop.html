@@ -39,45 +39,44 @@
             color: #f04e31;
         }
 
-        /* Products Grid */
+        /* Product Card Styles */
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .product-card {
             background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
+            transition: transform 0.3s;
+            text-align: center;
+            padding: 15px;
         }
         .product-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
         }
         .product-card img {
             width: 100%;
-            transition: transform 0.5s;
-        }
-        .product-card:hover img {
-            transform: scale(1.1);
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
         }
         .product-card h2 {
-            padding: 10px;
             font-size: 1.2em;
+            margin: 10px 0;
         }
         .product-card p {
-            padding: 0 10px;
             color: #666;
+            font-size: 0.9em;
         }
         .product-card button {
-            display: block;
-            width: 90%;
-            margin: 10px auto;
-            padding: 10px;
+            display: inline-block;
+            padding: 10px 15px;
             background: #f04e31;
             color: white;
             border: none;
@@ -88,45 +87,18 @@
         .product-card button:hover {
             background: #c63a24;
         }
-        
-        /* Cart Icon */
-        .cart-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-        }
-        .cart-icon span {
-            font-size: 18px;
-            color: red;
-            background: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-        }
 
-        /* Notification Popup */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #4caf50;
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(100%);
-            transition: opacity 0.3s, transform 0.3s;
-        }
-        .notification.show {
-            opacity: 1;
-            transform: translateY(0);
+        /* Responsive Adjustments */
+        @media screen and (max-width: 600px) {
+            .product-card img {
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1> FDA Underwear - Shop </h1>
+        <h1>FDA Underwear - Shop</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -135,13 +107,6 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-        <!-- Coșul de cumpărături - icon -->
-        <div class="cart-icon" id="cart-icon">
-            <a href="cart.html">
-                <span>🛒</span> 
-                <span id="cart-count">0</span>
-            </a>
-        </div>
     </header>
 
     <section class="products">
@@ -149,52 +114,40 @@
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
             <h2>SPHYNX PYRAMIDS</h2>
             <p>Comfortable and stylish.</p>
-            <button onclick="addToCart('SPHYNX PYRAMIDS')">Adaugă în Coș</button>
+            <button onclick="addToCart('SPHYNX PYRAMIDS')">Adaugă în coș</button>
         </div>
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="Model 2">
             <h2>THE ZAZA KINGDOM</h2>
             <p>Comfortable and stylish.</p>
-            <button onclick="addToCart('THE ZAZA KINGDOM')">Adaugă în Coș</button>
+            <button onclick="addToCart('THE ZAZA KINGDOM')">Adaugă în coș</button>
         </div>
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Model 3">
             <h2>MONEY RAIN</h2>
             <p>Comfortable and stylish.</p>
-            <button onclick="addToCart('MONEY RAIN')">Adaugă în Coș</button>
+            <button onclick="addToCart('MONEY RAIN')">Adaugă în coș</button>
         </div>
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Model 4">
             <h2>RIO DE JANEIRO</h2>
             <p>Comfortable and stylish.</p>
-            <button onclick="addToCart('RIO DE JANEIRO')">Adaugă în Coș</button>
+            <button onclick="addToCart('RIO DE JANEIRO')">Adaugă în coș</button>
         </div>
     </section>
-
-    <div class="notification" id="notification">
-        Produsul a fost adăugat în coș!
-    </div>
 
     <script>
         function addToCart(productName) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             cart.push(productName);
             localStorage.setItem("cart", JSON.stringify(cart));
+            alert("Produsul a fost adăugat în coș!");
             updateCartCount();
-            showNotification();
         }
 
         function updateCartCount() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             document.getElementById("cart-count").textContent = cart.length;
-        }
-
-        function showNotification() {
-            const notification = document.getElementById("notification");
-            notification.classList.add("show");
-            setTimeout(() => {
-                notification.classList.remove("show");
-            }, 2000);
         }
 
         window.onload = function() {
