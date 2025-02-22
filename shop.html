@@ -39,6 +39,23 @@
             color: #f04e31;
         }
 
+        /* Cart Icon */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f04e31;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .cart-icon:hover {
+            background: #c63a24;
+        }
+
         /* Product Card Styles */
         .products {
             display: grid;
@@ -108,6 +125,13 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Coșul de cumpărături - icon -->
+    <div class="cart-icon">
+        <a href="cart.html">
+            🛒 Coș (<span id="cart-count">0</span>)
+        </a>
+    </div>
 
     <section class="products">
         <div class="product-card">
