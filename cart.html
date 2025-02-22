@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>FDA Underwear - Coș de Cumpărături</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background: #f4f4f9;
         }
 
+        /* Header Styling */
         header {
             background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-
         nav ul {
             list-style: none;
             padding: 0;
@@ -24,126 +29,121 @@
             justify-content: center;
             gap: 20px;
         }
-
         nav ul li a {
             text-decoration: none;
             color: #333;
             font-weight: bold;
+            transition: color 0.3s;
         }
-
         nav ul li a:hover {
-            color: #000;
+            color: #f04e31;
         }
 
+        /* Cart Section */
         .cart-container {
-            padding: 20px;
             max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cart-item {
+            margin: 50px auto;
             background: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin: 10px 0;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
-
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
         .cart-item img {
-            width: 50px;
-            height: auto;
-            margin-right: 10px;
+            width: 100px;
+            border-radius: 10px;
         }
-
-        .cart-item span {
-            font-size: 16px;
+        .cart-item h2 {
+            font-size: 1.1em;
         }
-
-        .cart-icon {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 20px;
-        }
-
-        .cart-icon a {
-            text-decoration: none;
-            color: #000;
-        }
-
-        #cart-count {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background-color: red;
+        .cart-item button {
+            background: #f04e31;
             color: white;
-            padding: 5px;
-            border-radius: 50%;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .cart-item button:hover {
+            background: #c63a24;
         }
 
-        .total-price {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: #777;
         }
-
     </style>
 </head>
 <body>
     <header>
-        <h1>Shopping Cart</h1>
+        <h1>FDA Underwear - Coș de Cumpărături</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html">Shop</a></li>
-                <li><a href="cart.html">Cart</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Coșul de cumpărături -->
     <div class="cart-container">
-        <h2>Your Cart</h2>
-        <ul id="cart-items">
-            <!-- Produsele din coș vor apărea aici -->
-        </ul>
-        <div class="total-price">
-            Total: <span id="total-price">0</span> Lei
+        <h2>Produsele din coș:</h2>
+        <div id="cart-items">
+            <p class="empty-cart">Coșul tău este gol.</p>
         </div>
     </div>
 
     <script>
-        // Verifică dacă există coșul în localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        function loadCartItems() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.getElementById("cart-items");
+            cartItemsContainer.innerHTML = "";
 
-        // Afișează produsele din coș pe pagina coșului
-        function displayCartItems() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            let totalPrice = 0;
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p class="empty-cart">Coșul tău este gol.</p>`;
+                return;
+            }
 
-            cartItemsContainer.innerHTML = ''; // Curăță lista de produse din coș
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
 
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.classList.add('cart-item');
-                li.innerHTML = `${item.name} - ${item.quantity} x ${item.price} Lei`;
-                cartItemsContainer.appendChild(li);
-                totalPrice += item.price * item.quantity;
+                cartItem.innerHTML = `
+                    <h2>${item}</h2>
+                    <button onclick="removeFromCart(${index})">Șterge</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
             });
-
-            document.getElementById('total-price').innerText = totalPrice;
         }
 
-        // Adaugă produsele din coș la vizualizare
-        displayCartItems();
-
-        // Actualizează numărul de produse din coș
-        function updateCart() {
-            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-            document.getElementById('cart-count').innerText = cartCount;  // Afișează numărul de produse în coș
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1); // Șterge produsul de la index-ul specificat
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+            loadCartItems(); // Reîncarcă produsele din coș
         }
 
-        updateCart();
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cart-count").textContent = cart.length;
+        }
+
+        window.onload = function() {
+            loadCartItems();
+        }
     </script>
 </body>
 </html>
