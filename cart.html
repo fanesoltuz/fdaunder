@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: #000;
+        }
+
+        .cart-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cart-item {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .cart-item span {
+            font-size: 16px;
+        }
+
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+        }
+
+        .cart-icon a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Shopping Cart</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Coșul de cumpărături -->
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+        <ul id="cart-items">
+            <!-- Produsele din coș vor apărea aici -->
+        </ul>
+        <div class="total-price">
+            Total: <span id="total-price">0</span> Lei
+        </div>
+    </div>
+
+    <script>
+        // Verifică dacă există coșul în localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Afișează produsele din coș pe pagina coșului
+        function displayCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            let totalPrice = 0;
+
+            cartItemsContainer.innerHTML = ''; // Curăță lista de produse din coș
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.classList.add('cart-item');
+                li.innerHTML = `${item.name} - ${item.quantity} x ${item.price} Lei`;
+                cartItemsContainer.appendChild(li);
+                totalPrice += item.price * item.quantity;
+            });
+
+            document.getElementById('total-price').innerText = totalPrice;
+        }
+
+        // Adaugă produsele din coș la vizualizare
+        displayCartItems();
+
+        // Actualizează numărul de produse din coș
+        function updateCart() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').innerText = cartCount;  // Afișează numărul de produse în coș
+        }
+
+        updateCart();
+    </script>
+</body>
+</html>
