@@ -160,13 +160,24 @@
     </section>
 
     <script>
-        function addToCart(productName) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.push(productName);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            alert("Produsul a fost adăugat în coș!");
-            updateCartCount();
-        }
+        function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const productName = product.querySelector(".product-name").textContent;
+    const productImage = product.querySelector("img").src;
+    const productPrice = product.querySelector(".product-price").textContent;
+
+    let productDetails = {
+        name: productName,
+        image: productImage,
+        price: productPrice
+    };
+
+    cart.push(productDetails);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Produsul a fost adăugat în coș!");
+}
 
         function updateCartCount() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
