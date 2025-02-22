@@ -100,6 +100,19 @@
             text-align: center;
             padding: 10px;
         }
+
+        /* Slider Styles */
+        .slider {
+            max-width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .slider img {
+            width: 100%;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +130,12 @@
     <section class="hero">
         <h1>Discover Our Collection</h1>
     </section>
+
+    <!-- Slider Section -->
+    <div class="slider">
+        <img id="slider-image" src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Slider Image">
+    </div>
+
     <section class="products">
         <div class="product-card">
             <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
@@ -146,5 +165,24 @@
     <footer>
         © 2025 Underwear Brand. All rights reserved.
     </footer>
+
+    <script>
+        const sliderImages = [
+            "https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg",
+            "https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg",
+            "https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg",
+            "https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg"
+        ];
+
+        let currentIndex = 0;
+        const sliderImageElement = document.getElementById("slider-image");
+
+        function changeImage() {
+            currentIndex = (currentIndex + 1) % sliderImages.length;
+            sliderImageElement.src = sliderImages[currentIndex];
+        }
+
+        setInterval(changeImage, 3000);
+    </script>
 </body>
 </html>
