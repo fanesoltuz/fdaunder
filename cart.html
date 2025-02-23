@@ -208,12 +208,8 @@
         name: firstName + ' ' + lastName,
         phone: phone,
         email: email,
-        order: JSON.parse(localStorage.getItem("cart")).map(item => '${item.name} - ${item.price}`).join(", ")
+        order: JSON.stringify(JSON.parse(localStorage.getItem("cart")))
       };
-      if (!firstName || !lastName || !phone || !email) {
-  alert("Te rog să completezi toate câmpurile!");
-  return;
-}
 
       emailjs.send('service_ab57nkd', 'template_m0prruj', templateParams)
         .then(() => alert("Comanda a fost trimisă!"))
