@@ -174,7 +174,7 @@
       100% { background-color: #ffb6c1; }
     }
 
-    /* ====== OFFER POPUP ====== */
+    /* ====== OFFER POPUP (jos) ====== */
     .offer-popup {
       position: fixed;
       bottom: -200px; /* inițial, ascuns sub ecran */
@@ -214,14 +214,32 @@
       background: #eee;
     }
 
-    /* Responsive Adjustments */
-    @media screen and (max-width: 600px) {
-      .product-card img {
-        height: 250px;
-      }
-      .header-top h1 {
-        font-size: 1.8em;
-      }
+    /* ====== ADD-TO-CART POPUP (sus) ====== */
+    .added-popup {
+      position: fixed;
+      top: -200px; /* ascuns deasupra ecranului */
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f04e31;
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      z-index: 10000; /* mai sus decât offer-popup */
+      width: 300px;
+      text-align: center;
+      transition: top 0.8s ease; /* animație slide-down */
+    }
+    .added-popup.show {
+      top: 30px; /* apare la 30px de sus */
+    }
+    .added-popup h3 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+    .added-popup p {
+      font-size: 1.1em;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -242,7 +260,6 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="shop.html">Shop</a></li>
-        <!-- Aici am modificat "About" să trimită la About.html -->
         <li><a href="About.html">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
@@ -255,7 +272,7 @@
       <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
       <h2>SPHYNX PYRAMIDS</h2>
       <p>Comfortable and stylish.</p>
-      <p class="product-price">110 RON</p> 
+      <p class="product-price">110 RON</p>
       <button onclick="addToCart(this)">Adaugă în coș</button>
     </div>
     <!-- Exemplu Produs 2 -->
@@ -263,7 +280,7 @@
       <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="Model 2">
       <h2>THE ZAZA KINGDOM</h2>
       <p>Comfortable and stylish.</p>
-       <p class="product-price">110 RON</p> 
+      <p class="product-price">110 RON</p>
       <button onclick="addToCart(this)">Adaugă în coș</button>
     </div>
     <!-- Exemplu Produs 3 -->
@@ -271,7 +288,7 @@
       <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Model 3">
       <h2>MONEY RAIN</h2>
       <p>Comfortable and stylish.</p>
-      <p class="product-price">110 RON</p> 
+      <p class="product-price">110 RON</p>
       <button onclick="addToCart(this)">Adaugă în coș</button>
     </div>
     <!-- Exemplu Produs 4 -->
@@ -279,7 +296,7 @@
       <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Model 4">
       <h2>RIO DE JANEIRO</h2>
       <p>Comfortable and stylish.</p>
-      <p class="product-price">110 RON</p> 
+      <p class="product-price">110 RON</p>
       <button onclick="addToCart(this)">Adaugă în coș</button>
     </div>
   </section>
@@ -288,11 +305,17 @@
     THE BEST UNDERWEAR
   </div>
 
-  <!-- Pop-up animat (inițial ascuns) -->
+  <!-- Pop-up animat (inițial ascuns) - Oferta la 7 secunde, jos -->
   <div class="offer-popup" id="offerPopup">
     <h3>Ofertă Specială!</h3>
     <p>2 perechi la 180 de lei!</p>
     <button class="close-btn" onclick="hideOffer()">Închide</button>
+  </div>
+
+  <!-- Pop-up animat (inițial ascuns) - Adăugare în coș, sus -->
+  <div class="added-popup" id="addToCartPopup">
+    <h3>Produs adăugat în coș!</h3>
+    <p id="added-product-name"></p>
   </div>
 
   <script>
@@ -327,7 +350,9 @@
 
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartCount();
-      alert("Produsul a fost adăugat în coș!");
+
+      // Afișăm pop-up de tip toast (sus)
+      showAddToCartPopup(productName);
     }
 
     // Afișează numărul total de produse (suma cantităților)
@@ -337,25 +362,36 @@
       document.getElementById("cart-count").textContent = totalQuantity;
     }
 
-    // Funcții pentru pop-up animat
+    // Pop-up la 7 secunde (ofertă)
     let popupInterval = null;
-
-    // Arată pop-up
     function showOffer() {
       const popup = document.getElementById("offerPopup");
       popup.classList.add("show");
     }
-
-    // Ascunde pop-up
     function hideOffer() {
       const popup = document.getElementById("offerPopup");
       popup.classList.remove("show");
     }
 
+    // Pop-up sus pentru confirmare "Produs adăugat"
+    function showAddToCartPopup(productName) {
+      const addPopup = document.getElementById("addToCartPopup");
+      const nameElem = document.getElementById("added-product-name");
+      nameElem.textContent = productName;
+
+      // Afișăm pop-up
+      addPopup.classList.add("show");
+
+      // După 3 secunde îl ascundem automat
+      setTimeout(() => {
+        addPopup.classList.remove("show");
+      }, 3000);
+    }
+
     window.onload = function() {
       updateCartCount();
 
-      // La fiecare 7 secunde, afișăm pop-up-ul
+      // La fiecare 7 secunde, afișăm pop-up-ul de ofertă (jos)
       popupInterval = setInterval(showOffer, 7000);
     }
   </script>
