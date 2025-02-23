@@ -160,9 +160,8 @@
     <button onclick="submitOrder()">Trimite Comanda</button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
-  <script>
-    emailjs.init("public_T7DIDQzcWVzzJr0p3"); // Înlocuiește cu user_id de la EmailJS
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.11.0/dist/email.min.js"></script>  <script>
+    emailjs.init("2A1MNNWe5jsS7hlgF"); // Înlocuiește cu user_id de la EmailJS
 
     function loadCartItems() {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
