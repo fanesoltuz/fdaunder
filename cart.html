@@ -245,11 +245,12 @@
         🛒 Coș
       </a>
     </div>
+    <!-- Aici am modificat "About" să trimită la About.html -->
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="shop.html">Shop</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="About.html">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </nav>
@@ -293,7 +294,6 @@
     let totalCart = 0; // pentru totalul coșului
 
     cart.forEach((product, index) => {
-      // Valorile produsului
       let prodName = product.name || "Produs fără nume";
       let prodPriceStr = product.price || "0 RON";
       let prodImage = product.image || "https://via.placeholder.com/80";
@@ -303,18 +303,14 @@
       let normalPrice = parseInt(prodPriceStr) || 0;
 
       // Calculez prețul cu oferta "2 perechi la 180 lei" PER produs
-      // -> La fiecare 2 bucăți, se plătește 180 lei, altfel se plătește prețul normal
       let pairs = Math.floor(prodQuantity / 2);
       let leftover = prodQuantity % 2;
       let discountedTotal = pairs * 180 + leftover * normalPrice;
 
-      // Actualizez totalul coșului
       totalCart += discountedTotal;
 
-      // Construiresc HTML pentru item
       const itemDiv = document.createElement('div');
       itemDiv.classList.add('cart-item');
-      // Afișez prețul total pentru produsul curent (discountedTotal) și quantity
       itemDiv.innerHTML = `
         <img src="${prodImage}" alt="${prodName}">
         <span>${prodName}</span>
@@ -334,7 +330,6 @@
     document.getElementById("cart-total").textContent = totalCart;
   }
 
-  // Funcție care crește/scade cantitatea produsului
   function updateQuantity(index, delta) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart[index].quantity = (cart[index].quantity || 1) + delta;
@@ -345,7 +340,6 @@
     loadCartItems();
   }
 
-  // Șterge complet un produs din coș
   function removeFromCart(index) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart.splice(index, 1);
@@ -353,13 +347,11 @@
     loadCartItems();
   }
 
-  // Golește tot coșul
   function clearCart() {
     localStorage.removeItem("cart");
     loadCartItems();
   }
 
-  // Trimite comanda prin EmailJS
   function submitOrder() {
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
@@ -378,7 +370,6 @@
       .catch(() => alert("A apărut o eroare."));
   }
 
-  // La încărcarea paginii, afișez coșul
   window.onload = function() {
     loadCartItems();
   }
