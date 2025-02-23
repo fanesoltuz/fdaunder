@@ -212,7 +212,7 @@
         order: JSON.stringify(JSON.parse(localStorage.getItem("cart")))
       };
 
-      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      emailjs.send('service_ab57nkd', 'template_0ikirwa', templateParams)
         .then(() => alert("Comanda a fost trimisă!"))
         .catch(() => alert("A apărut o eroare."));
     }
