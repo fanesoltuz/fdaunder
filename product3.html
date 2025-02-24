@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FDA Underwear - MONEY RAIN</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+    body {
+      font-family: 'Bangers', cursive;
+      background: #000;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .header-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 20px;
+    }
+    .gorilla-logo {
+      width: 70px;
+      cursor: pointer;
+    }
+    .header-title {
+      margin: 0;
+      font-size: 2em;
+      color: #fff;
+      text-align: center;
+    }
+    .cart-icon {
+      background: #f04e31;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .cart-icon:hover {
+      background: #c63a24;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+      padding: 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      color: #f04e31;
+    }
+    .product-page {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 30px auto;
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-image {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .product-image img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .product-details {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-details h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .size-select {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    select {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      background: #333;
+      color: #fff;
+    }
+    .add-to-cart-btn {
+      padding: 10px 20px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 5px;
+      background: #f04e31;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .add-to-cart-btn:hover {
+      background: #c63a24;
+    }
+    .added-popup {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f04e31;
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      z-index: 9999;
+      width: 300px;
+      text-align: center;
+      transition: top 0.8s ease;
+    }
+    .added-popup.show {
+      top: 30px;
+    }
+    .added-popup h3 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+    .added-popup p {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <a href="index.html">
+        <img src="gorila.png" alt="gorilla.jpg" class="gorilla-logo">
+      </a>
+      <h1 class="header-title">FDA Underwear</h1>
+      <a class="cart-icon" href="cart.html">
+        🛒 Coș (<span id="cart-count">0</span>)
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="product-page">
+    <div class="product-image">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="MONEY RAIN">
+    </div>
+    <div class="product-details">
+      <h2>MONEY RAIN</h2>
+      <div class="size-select">
+        <label for="sizeSelect">Selectează mărimea:</label>
+        <select id="sizeSelect">
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+      </div>
+      <button class="add-to-cart-btn" onclick="addToCart()">Adaugă în coș</button>
+    </div>
+  </div>
+
+  <div class="added-popup" id="addToCartPopup">
+    <h3>Produs adăugat în coș!</h3>
+    <p id="added-product-name"></p>
+  </div>
+
+  <script>
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let totalQuantity = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+      document.getElementById("cart-count").textContent = totalQuantity;
+    }
+
+    function showAddToCartPopup(productName) {
+      const addPopup = document.getElementById("addToCartPopup");
+      const nameElem = document.getElementById("added-product-name");
+      nameElem.textContent = productName;
+
+      addPopup.classList.add("show");
+      setTimeout(() => {
+        addPopup.classList.remove("show");
+      }, 3000);
+    }
+
+    function addToCart() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const productName = "MONEY RAIN";
+      const productImage = "https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg";
+      const productPrice = "110 RON";
+      const size = document.getElementById("sizeSelect").value;
+
+      let existingProduct = cart.find(item => item.name === productName && item.size === size);
+
+      if (existingProduct) {
+        existingProduct.quantity++;
+      } else {
+        let productDetails = {
+          name: productName,
+          image: productImage,
+          price: productPrice,
+          size: size,
+          quantity: 1
+        };
+        cart.push(productDetails);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      showAddToCartPopup(productName + " - " + size);
+    }
+
+    window.onload = function() {
+      updateCartCount();
+    }
+  </script>
+</body>
+</html>
