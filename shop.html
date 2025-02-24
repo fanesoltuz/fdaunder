@@ -17,7 +17,7 @@
     /* Body cu imagine graffiti și font Bangers */
     body {
       font-family: 'Bangers', cursive;
-      font-size: 1.2em; /* Mărim puțin fontul */
+      font-size: 1.2em;
       background: url("graffiti.jpg") center/cover no-repeat fixed;
       color: #fff;
       margin: 0;
@@ -35,7 +35,6 @@
       text-align: center;
     }
 
-    /* Container cu 3 coloane: logo stânga, titlu centru, coș dreapta */
     .header-top {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -68,7 +67,6 @@
       background: #c63a24;
     }
 
-    /* Meniu sub header-top */
     nav ul {
       list-style: none;
       padding: 0;
@@ -115,18 +113,18 @@
       border-radius: 10px;
     }
 
-    /* Borduri neon pentru fiecare imagine */
+    /* Borduri neon */
     .products .product-card:nth-child(1) img {
-      border: 5px solid #39FF14; /* Neon verde */
+      border: 5px solid #39FF14;
     }
     .products .product-card:nth-child(2) img {
-      border: 5px solid #FF073A; /* Neon roșu */
+      border: 5px solid #FF073A;
     }
     .products .product-card:nth-child(3) img {
-      border: 5px solid #FFFF33; /* Neon galben */
+      border: 5px solid #FFFF33;
     }
     .products .product-card:nth-child(4) img {
-      border: 5px solid #FF073A; /* Poți modifica după preferințe */
+      border: 5px solid #FF073A;
     }
 
     .product-card h2 {
@@ -139,6 +137,7 @@
       font-size: 1.1em;
       margin-bottom: 10px;
     }
+    /* Înlocuim butonul de Add cu "Vizualizează produs" */
     .product-card button {
       display: inline-block;
       padding: 10px 15px;
@@ -154,13 +153,13 @@
       background: #c63a24;
     }
 
-    /* ====== BANNER FOOTER ====== */
+    /* Banner final */
     .banner {
       width: 100%;
       padding: 30px;
       text-align: center;
-      font-size: 2.5em; 
-      color: #000; 
+      font-size: 2.5em;
+      color: #000;
       border: 3px solid #000;
       animation: glowing 5s infinite;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
@@ -168,16 +167,17 @@
       font-family: 'Bangers', cursive;
     }
     @keyframes glowing {
-      0%   { background-color: #ffb6c1; }  /* roz deschis */
-      33%  { background-color: #ffffe0; }  /* galben deschis */
-      66%  { background-color: #90ee90; }  /* verde deschis */
+      0%   { background-color: #ffb6c1; }
+      33%  { background-color: #ffffe0; }
+      66%  { background-color: #90ee90; }
       100% { background-color: #ffb6c1; }
     }
 
-    /* ====== OFFER POPUP (jos) ====== */
+    /* Pop-up ofertă și pop-up add to cart le păstrăm la fel
+       (dacă vrei să le elimini, o poți face) */
     .offer-popup {
       position: fixed;
-      bottom: -200px; /* inițial, ascuns sub ecran */
+      bottom: -200px;
       left: 50%;
       transform: translateX(-50%);
       background: #f04e31;
@@ -188,10 +188,10 @@
       z-index: 9999;
       width: 300px;
       text-align: center;
-      transition: bottom 0.8s ease; /* animație slide-up */
+      transition: bottom 0.8s ease;
     }
     .offer-popup.show {
-      bottom: 30px; /* apare la 30px de la baza ferestrei */
+      bottom: 30px;
     }
     .offer-popup h3 {
       margin-bottom: 10px;
@@ -214,10 +214,9 @@
       background: #eee;
     }
 
-    /* ====== ADD-TO-CART POPUP (sus) ====== */
     .added-popup {
       position: fixed;
-      top: -200px; /* ascuns deasupra ecranului */
+      top: -200px;
       left: 50%;
       transform: translateX(-50%);
       background: #f04e31;
@@ -225,13 +224,13 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      z-index: 10000; /* mai sus decât offer-popup */
+      z-index: 10000;
       width: 300px;
       text-align: center;
-      transition: top 0.8s ease; /* animație slide-down */
+      transition: top 0.8s ease;
     }
     .added-popup.show {
-      top: 30px; /* apare la 30px de sus */
+      top: 30px;
     }
     .added-popup h3 {
       margin-bottom: 10px;
@@ -245,7 +244,6 @@
 </head>
 <body>
   <header>
-    <!-- Rândul cu logo, titlu și coș -->
     <div class="header-top">
       <a href="index.html" class="logo-link">
         <img src="gorila.png" alt="Gorilla Logo" class="gorilla-logo">
@@ -255,7 +253,6 @@
         🛒 Coș (<span id="cart-count">0</span>)
       </a>
     </div>
-    <!-- Meniu sub header-top -->
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -267,37 +264,37 @@
   </header>
 
   <section class="products">
-    <!-- Exemplu Produs 1 -->
+    <!-- Produs 1 -->
     <div class="product-card">
-      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="SPHYNX PYRAMIDS">
       <h2>SPHYNX PYRAMIDS</h2>
       <p>Comfortable and stylish.</p>
       <p class="product-price">110 RON</p>
-      <button onclick="addToCart(this)">Adaugă în coș</button>
+      <button onclick="window.location.href='product1.html'">Vizualizează produs</button>
     </div>
-    <!-- Exemplu Produs 2 -->
+    <!-- Produs 2 -->
     <div class="product-card">
-      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="Model 2">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="THE ZAZA KINGDOM">
       <h2>THE ZAZA KINGDOM</h2>
       <p>Comfortable and stylish.</p>
       <p class="product-price">110 RON</p>
-      <button onclick="addToCart(this)">Adaugă în coș</button>
+      <button onclick="window.location.href='product2.html'">Vizualizează produs</button>
     </div>
-    <!-- Exemplu Produs 3 -->
+    <!-- Produs 3 -->
     <div class="product-card">
-      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="Model 3">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="MONEY RAIN">
       <h2>MONEY RAIN</h2>
       <p>Comfortable and stylish.</p>
       <p class="product-price">110 RON</p>
-      <button onclick="addToCart(this)">Adaugă în coș</button>
+      <button onclick="window.location.href='product3.html'">Vizualizează produs</button>
     </div>
-    <!-- Exemplu Produs 4 -->
+    <!-- Produs 4 -->
     <div class="product-card">
-      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="Model 4">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="RIO DE JANEIRO">
       <h2>RIO DE JANEIRO</h2>
       <p>Comfortable and stylish.</p>
       <p class="product-price">110 RON</p>
-      <button onclick="addToCart(this)">Adaugă în coș</button>
+      <button onclick="window.location.href='product4.html'">Vizualizează produs</button>
     </div>
   </section>
 
@@ -305,56 +302,20 @@
     THE BEST UNDERWEAR
   </div>
 
-  <!-- Pop-up animat (inițial ascuns) - Oferta la 7 secunde, jos -->
+  <!-- Pop-up ofertă la 7 secunde (jos) - opțional -->
   <div class="offer-popup" id="offerPopup">
     <h3>Ofertă Specială!</h3>
     <p>2 perechi la 180 de lei!</p>
     <button class="close-btn" onclick="hideOffer()">Închide</button>
   </div>
 
-  <!-- Pop-up animat (inițial ascuns) - Adăugare în coș, sus -->
+  <!-- Pop-up add to cart (sus) - opțional, dacă mai vrei să-l păstrezi -->
   <div class="added-popup" id="addToCartPopup">
     <h3>Produs adăugat în coș!</h3>
     <p id="added-product-name"></p>
   </div>
 
   <script>
-    // Adaugă produsul în coș, fără duplicat
-    function addToCart(button) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-      let productCard = button.parentElement;
-      let productName = productCard.querySelector("h2") 
-        ? productCard.querySelector("h2").textContent 
-        : "Produs fără nume";
-      let productImage = productCard.querySelector("img") 
-        ? productCard.querySelector("img").src 
-        : "https://via.placeholder.com/300";
-      let priceElem = productCard.querySelector(".product-price");
-      let productPrice = priceElem ? priceElem.textContent : "0 RON";
-
-      // Căutăm dacă produsul există deja în coș
-      let existingProduct = cart.find(item => item.name === productName);
-      if (existingProduct) {
-        existingProduct.quantity++;
-      } else {
-        // Dacă nu, îl adăugăm cu quantity = 1
-        let productDetails = {
-          name: productName,
-          image: productImage,
-          price: productPrice,
-          quantity: 1
-        };
-        cart.push(productDetails);
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartCount();
-
-      // Afișăm pop-up de tip toast (sus)
-      showAddToCartPopup(productName);
-    }
-
     // Afișează numărul total de produse (suma cantităților)
     function updateCartCount() {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -362,7 +323,6 @@
       document.getElementById("cart-count").textContent = totalQuantity;
     }
 
-    // Pop-up la 7 secunde (ofertă)
     let popupInterval = null;
     function showOffer() {
       const popup = document.getElementById("offerPopup");
@@ -373,26 +333,10 @@
       popup.classList.remove("show");
     }
 
-    // Pop-up sus pentru confirmare "Produs adăugat"
-    function showAddToCartPopup(productName) {
-      const addPopup = document.getElementById("addToCartPopup");
-      const nameElem = document.getElementById("added-product-name");
-      nameElem.textContent = productName;
-
-      // Afișăm pop-up
-      addPopup.classList.add("show");
-
-      // După 3 secunde îl ascundem automat
-      setTimeout(() => {
-        addPopup.classList.remove("show");
-      }, 3000);
-    }
-
     window.onload = function() {
       updateCartCount();
-
-      // La fiecare 7 secunde, afișăm pop-up-ul de ofertă (jos)
-      popupInterval = setInterval(showOffer, 7000);
+      // La fiecare 7 secunde, pop-up ofertă
+      popupInterval = setInterval(showOffer, 15000);
     }
   </script>
 </body>
