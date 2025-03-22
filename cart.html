@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>FDA Underwear - Coș de Cumpărături</title>
+
+  <!-- Stripe.js (necesar pentru plata cu cardul) -->
+  <script src="https://js.stripe.com/v3"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
@@ -14,7 +18,6 @@
       background: url("graffiti.jpg") center center / cover no-repeat fixed; 
       color: #fff; 
     }
-
     /* ====== HEADER ====== */
     header {
       background-color: #1e1e1e;
@@ -91,8 +94,6 @@
       font-size: 1.8em;
       color: #fff;
     }
-
-    /* Cart items */
     .cart-item {
       display: flex;
       flex-direction: column;
@@ -113,8 +114,6 @@
       color: #fff;
       margin: 5px 0;
     }
-
-    /* Container pentru butoane +/- și cantitatea */
     .quantity-container {
       display: flex;
       align-items: center;
@@ -139,8 +138,6 @@
       min-width: 20px;
       text-align: center;
     }
-
-    /* Buton șterge item */
     .cart-item button.remove-btn {
       background: #f04e31;
       color: #fff;
@@ -154,15 +151,12 @@
     .cart-item button.remove-btn:hover {
       background: #c63a24;
     }
-
     .empty-cart {
       text-align: center;
       color: #ccc;
       font-style: italic;
       margin-top: 20px;
     }
-
-    /* Buton Clear All + Total Comandă */
     .cart-footer {
       display: flex;
       justify-content: center;
@@ -233,13 +227,23 @@
       background: #218838;
     }
 
+    /* ====== STRIPE CARD ELEMENT ====== */
+    #card-element {
+      width: 70%;
+      max-width: 400px;
+      margin: 0 auto 15px;
+      background: #fff;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
     /* ====== ORDER CONFIRM POPUP ====== */
     .order-popup {
       position: fixed;
       top: -200px; /* ascuns deasupra ecranului */
       left: 50%;
       transform: translateX(-50%);
-      background: #28a745; /* verde */
+      background: #28a745;
       color: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -263,6 +267,7 @@
   </style>
 </head>
 <body>
+
   <header>
     <div class="header-top">
       <a href="index.html" class="logo-link">
@@ -298,7 +303,16 @@
     <input type="text" id="lastName" placeholder="Prenume" required>
     <input type="tel" id="phone" placeholder="Număr de telefon" required>
     <input type="email" id="email" placeholder="Email" required>
-    <button onclick="submitOrder()">Trimite Comanda</button>
+    <!-- Adresă: Strada și Număr -->
+    <input type="text" id="street" placeholder="Strada" required>
+    <input type="text" id="houseNumber" placeholder="Număr" required>
+
+    <!-- Element Stripe card -->
+    <div id="card-element"><!-- Stripe.js va monta elementul de card aici --></div>
+
+    <button onclick="payWithCard()">Plătește cu cardul</button>
+    <br><br>
+    <button onclick="submitOrder()">Trimite Comanda (Ramburs/EmailJS)</button>
   </div>
 
   <!-- Pop-up verde - confirmare comandă -->
@@ -309,7 +323,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.11.0/dist/email.min.js"></script>
 <script>
+  // Inițializezi EmailJS
   emailjs.init("2A1MNNWe5jsS7hlgF"); // user_id EmailJS
+
+  // AICI pui CHEIA PUBLICĂ Stripe
+  // pk_live_51QxsPEJtEb8nTuaeMQCuNgIdTPKOFk349CyeIkxQcuGNJOHyZqtlt8iePU6DApxYF4r3DI2ELgZLrxfHlaGgvIFZ00KcrlBCLi
+  const stripe = Stripe('pk_live_51QxsPEJtEb8nTuaeMQCuNgIdTPKOFk349CyeIkxQcuGNJOHyZqtlt8iePU6DApxYF4r3DI2ELgZLrxfHlaGgvIFZ00KcrlBCLi');
+  let cardElement = null;
+
+  function initStripeElements() {
+    const elements = stripe.elements();
+    cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+  }
 
   function loadCartItems() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -322,7 +348,6 @@
     }
 
     cartItemsContainer.innerHTML = '';
-    let totalCart = 0;
 
     cart.forEach((product, index) => {
       let prodName = product.name || "Produs fără nume";
@@ -353,9 +378,8 @@
     document.getElementById("cart-total").textContent = total;
   }
 
-  // Calculează totalul cu discount (orice 2 articole = 180 RON)
+  // Discount: oricare 2 articole = 180 RON
   function calcTotalWithDiscount(cart) {
-    // 1. Colectăm toate prețurile (fiecare bucată)
     let allPrices = [];
     cart.forEach(product => {
       let priceStr = product.price || "0 RON";
@@ -365,17 +389,15 @@
         allPrices.push(priceNum);
       }
     });
-
-    // 2. Sortăm descrescător (dacă vrei să aplici discount la cele mai scumpe)
+    // sortare descrescător
     allPrices.sort((a, b) => b - a);
 
-    // 3. La fiecare pereche => 180, leftover => preț normal
     let total = 0;
     for (let i = 0; i < allPrices.length; i += 2) {
       if (i + 1 < allPrices.length) {
-        total += 180; // 2 articole
+        total += 180; 
       } else {
-        total += allPrices[i]; // leftover 1 articol
+        total += allPrices[i];
       }
     }
     return total;
@@ -403,6 +425,7 @@
     loadCartItems();
   }
 
+  // Pop-up verde 
   function showOrderPopup() {
     const popup = document.getElementById("orderPopup");
     popup.classList.add("show");
@@ -411,16 +434,21 @@
     }, 10000);
   }
 
+  // Trimite comanda (ramburs + EmailJS)
   function submitOrder() {
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
     const phone = document.getElementById("phone").value;
     const email = document.getElementById("email").value;
+    const street = document.getElementById("street").value;
+    const houseNumber = document.getElementById("houseNumber").value;
 
     let templateParams = {
       name: firstName + ' ' + lastName,
       phone: phone,
       email: email,
+      street: street,
+      houseNumber: houseNumber,
       order: JSON.stringify(JSON.parse(localStorage.getItem("cart")))
     };
 
@@ -433,8 +461,67 @@
       .catch(() => alert("A apărut o eroare."));
   }
 
+  // Plată cu cardul (Stripe)
+  async function payWithCard() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (!cart.length) {
+      alert("Coșul e gol!");
+      return;
+    }
+
+    let total = calcTotalWithDiscount(cart); // ex. 180
+
+    // Apelezi un server Node care creează PaymentIntent
+    // /api/create-payment-intent (înlocuiește cu URL-ul serverului tău)
+    try {
+      const resp = await fetch('http://localhost:3001/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ total })
+      });
+      const data = await resp.json();
+      if (!data.clientSecret) {
+        alert("Eroare la crearea PaymentIntent!");
+        return;
+      }
+      const clientSecret = data.clientSecret;
+
+      // Confirmăm plata
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const email = document.getElementById("email").value;
+
+      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: firstName + " " + lastName,
+            email: email
+          }
+        }
+      });
+
+      if (error) {
+        alert("Eroare la plată: " + error.message);
+      } else {
+        if (paymentIntent && paymentIntent.status === 'succeeded') {
+          // Plată reușită
+          alert("Plată efectuată cu succes! ID: " + paymentIntent.id);
+
+          // Golește coșul
+          localStorage.removeItem("cart");
+          loadCartItems();
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Eroare la conectarea cu serverul de plată.");
+    }
+  }
+
   window.onload = function() {
     loadCartItems();
+    initStripeElements(); // inițializăm Stripe Elements
   }
 </script>
 </body>
