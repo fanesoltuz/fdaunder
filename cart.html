@@ -463,62 +463,67 @@
 
   // Plată cu cardul (Stripe)
   async function payWithCard() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    if (!cart.length) {
-      alert("Coșul e gol!");
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (!cart.length) {
+    alert("Coșul e gol!");
+    return;
+  }
+
+  let total = calcTotalWithDiscount(cart); // ex. 180
+
+  try {
+    // Trimite cererea la backend pentru a crea un PaymentIntent
+    const resp = await fetch('http://localhost:3001/api/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ total })
+    });
+
+    // Verifică dacă răspunsul este valid
+    if (!resp.ok) {
+      throw new Error('Eroare la conectarea cu serverul');
+    }
+
+    const data = await resp.json();
+    if (!data.clientSecret) {
+      alert("Eroare la crearea PaymentIntent!");
       return;
     }
 
-    let total = calcTotalWithDiscount(cart); // ex. 180
+    const clientSecret = data.clientSecret;
 
-    // Apelezi un server Node care creează PaymentIntent
-    // /api/create-payment-intent (înlocuiește cu URL-ul serverului tău)
-    try {
-      const resp = await fetch('http://localhost:3001/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ total })
-      });
-      const data = await resp.json();
-      if (!data.clientSecret) {
-        alert("Eroare la crearea PaymentIntent!");
-        return;
-      }
-      const clientSecret = data.clientSecret;
+    // Confirmăm plata cu Stripe
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const email = document.getElementById("email").value;
 
-      // Confirmăm plata
-      const firstName = document.getElementById("firstName").value;
-      const lastName = document.getElementById("lastName").value;
-      const email = document.getElementById("email").value;
-
-      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: firstName + " " + lastName,
-            email: email
-          }
-        }
-      });
-
-      if (error) {
-        alert("Eroare la plată: " + error.message);
-      } else {
-        if (paymentIntent && paymentIntent.status === 'succeeded') {
-          // Plată reușită
-          alert("Plată efectuată cu succes! ID: " + paymentIntent.id);
-
-          // Golește coșul
-          localStorage.removeItem("cart");
-          loadCartItems();
+    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          name: firstName + " " + lastName,
+          email: email
         }
       }
-    } catch (err) {
-      console.error(err);
-      alert("Eroare la conectarea cu serverul de plată.");
+    });
+
+    if (error) {
+      alert("Eroare la plată: " + error.message);
+    } else {
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Plată reușită
+        alert("Plată efectuată cu succes! ID: " + paymentIntent.id);
+
+        // Golește coșul
+        localStorage.removeItem("cart");
+        loadCartItems();
+      }
     }
+  } catch (err) {
+    console.error(err);
+    alert("Eroare la conectarea cu serverul de plată.");
   }
-
+}
   window.onload = function() {
     loadCartItems();
     initStripeElements(); // inițializăm Stripe Elements
