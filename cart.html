@@ -469,7 +469,8 @@
     return;
   }
 
-  let total = calcTotalWithDiscount(cart); // ex. 180
+  let total = calcTotalWithDiscount(cart); // Calculează totalul cu discount
+  console.log('Total calculat:', total); // Verifică totalul
 
   try {
     // Trimite cererea la backend pentru a crea un PaymentIntent
@@ -479,48 +480,46 @@
       body: JSON.stringify({ total })
     });
 
-    // Verifică dacă răspunsul este valid
     if (!resp.ok) {
       throw new Error('Eroare la conectarea cu serverul');
     }
 
     const data = await resp.json();
+    console.log('Răspuns de la backend:', data); // Verifică răspunsul
     if (!data.clientSecret) {
       alert("Eroare la crearea PaymentIntent!");
       return;
     }
 
     const clientSecret = data.clientSecret;
+    console.log('Client Secret:', clientSecret); // Verifică clientSecret
 
-    // Confirmăm plata cu Stripe
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const email = document.getElementById("email").value;
-
+    // Confirmă plata cu Stripe
     const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: cardElement,
         billing_details: {
-          name: firstName + " " + lastName,
-          email: email
+          name: document.getElementById("firstName").value + " " + document.getElementById("lastName").value,
+          email: document.getElementById("email").value
         }
       }
     });
 
     if (error) {
+      console.error('Eroare la plată:', error); // Loghează eroarea
       alert("Eroare la plată: " + error.message);
     } else {
       if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Plată reușită
+        console.log('Plată reușită:', paymentIntent); // Loghează plata reușită
         alert("Plată efectuată cu succes! ID: " + paymentIntent.id);
 
-        // Golește coșul
+        // Golește coșul după plată
         localStorage.removeItem("cart");
         loadCartItems();
       }
     }
   } catch (err) {
-    console.error(err);
+    console.error('Eroare la conectarea cu serverul de plată:', err); // Loghează eroarea
     alert("Eroare la conectarea cu serverul de plată.");
   }
 }
