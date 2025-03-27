@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>FDA Underwear - Contact</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bangers', cursive;
+            background: url("graffiti.jpg") center/cover no-repeat fixed;
+            color: #fff;
+        }
+
+        header {
+            background-color: rgba(30, 30, 30, 0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .gorilla-logo {
+            width: 70px;
+            height: auto;
+            cursor: pointer;
+        }
+        .header-title {
+            font-size: 2em;
+        }
+        .cart-icon {
+            background: #f04e31;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .cart-icon:hover {
+            background: #c63a24;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #f04e31;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: rgba(30, 30, 30, 0.95);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .contact-container h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .contact-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .contact-container input, .contact-container textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1.1em;
+            width: 100%;
+            outline: none;
+        }
+        .contact-container button {
+            padding: 12px;
+            background: #f04e31;
+            color: white;
+            border: none;
+            font-size: 1.3em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .contact-container button:hover {
+            background: #c63a24;
+            transform: scale(1.05);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            font-size: 2.5em;
+            color: white;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #f04e31;
+            transform: scale(1.2);
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <a href="index.html">
+                <img src="logonou.jpg" alt="Gorilla Logo" class="gorilla-logo">
+            </a>
+            <h1 class="header-title">Contact FDA Underwear</h1>
+            <a class="cart-icon" href="cart.html">🛒 Coș</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contact-container">
+        <h2>Contactează-ne</h2>
+        <form action="procesare_formular.php" method="post">
+            <input type="text" name="nume" placeholder="Nume" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="mesaj" rows="5" placeholder="Mesaj" required></textarea>
+            <button type="submit">Trimite</button>
+        </form>
+        <div class="social-icons">
+            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+    </div>
+
+    <div class="about-banner">
+        Stay connected with FDA Underwear!
+    </div>
+</body>
+</html>
