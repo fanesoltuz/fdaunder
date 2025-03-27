@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>FDA Underwear - About</title>
+  <title>FDA Underwear - Shop</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-    /* Resetări de bază */
+    /* Resetare stiluri */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Body - temă graffiti + font Bangers */
+    /* Body cu imagine graffiti și font Bangers */
     body {
       font-family: 'Bangers', cursive;
+      font-size: 1.2em;
       background: url("graffiti.jpg") center/cover no-repeat fixed;
       color: #fff;
       margin: 0;
@@ -25,7 +26,7 @@
 
     /* ====== HEADER ====== */
     header {
-      background-color: #1e1e1e;
+      background-color: rgba(30, 30, 30, 0.9);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
       padding: 20px;
       position: sticky;
@@ -33,11 +34,12 @@
       z-index: 1000;
       text-align: center;
     }
+
     .header-top {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 20px;
+      margin-bottom: 10px;
     }
     .gorilla-logo {
       width: 90px;
@@ -45,9 +47,9 @@
       margin-top: 5px;
       cursor: pointer;
     }
-    .header-title {
+    .header-top h1 {
       margin: 0;
-      font-size: 2em;
+      font-size: 2.5em;
       color: #fff;
       text-align: center;
     }
@@ -65,14 +67,13 @@
       background: #c63a24;
     }
 
-    /* Meniu de navigație sub header-top */
     nav ul {
       list-style: none;
-      display: flex;
+      padding: 0;
+      display: inline-flex;
       justify-content: center;
       gap: 20px;
       margin: 0;
-      padding: 0;
     }
     nav ul li a {
       text-decoration: none;
@@ -84,78 +85,259 @@
       color: #f04e31;
     }
 
-    /* Container principal pentru descriere brand */
-    .about-container {
-      max-width: 800px;
-      margin: 30px auto;
-      background: rgba(30, 30, 30, 0.9);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
+    /* ====== PRODUCTS ====== */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
       padding: 20px;
-      text-align: left;
-      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .about-container h2 {
+    .product-card {
+      background: rgba(30, 30, 30, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      transition: transform 0.3s;
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-      color: #fff;
+      padding: 15px;
     }
-    .about-container p {
-      font-size: 1.2em;
-      color: #ddd;
-      margin-bottom: 10px;
-      text-align: justify;
+    .product-card:hover {
+      transform: translateY(-10px);
+    }
+    .product-card img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 10px;
     }
 
-    /* Banner final cu altă tematică colorată */
-    .about-banner {
+    /* Borduri neon */
+    .products .product-card:nth-child(1) img {
+      border: 5px solid #39FF14;
+    }
+    .products .product-card:nth-child(2) img {
+      border: 5px solid #FF073A;
+    }
+    .products .product-card:nth-child(3) img {
+      border: 5px solid #FFFF33;
+    }
+    .products .product-card:nth-child(4) img {
+      border: 5px solid #FF073A;
+    }
+
+    .product-card h2 {
+      font-size: 1.8em;
+      margin: 10px 0;
+      color: #fff;
+    }
+    .product-card p {
+      color: #ccc;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+    /* Înlocuim butonul de Add cu "Vizualizează produs" */
+    .product-card button {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #f04e31;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 1em;
+    }
+    .product-card button:hover {
+      background: #c63a24;
+    }
+
+    /* Banner final */
+    .banner {
       width: 100%;
       padding: 30px;
       text-align: center;
-      font-size: 2em;
-      color: #fff;
-      background: linear-gradient(135deg, #8a2be2, #ff69b4);
+      font-size: 2.5em;
+      color: #000;
+      border: 3px solid #000;
+      animation: glowing 5s infinite;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
       margin-top: 40px;
       font-family: 'Bangers', cursive;
+    }
+    @keyframes glowing {
+      0%   { background-color: #ffb6c1; }
+      33%  { background-color: #ffffe0; }
+      66%  { background-color: #90ee90; }
+      100% { background-color: #ffb6c1; }
+    }
+
+    /* Pop-up ofertă și pop-up add to cart le păstrăm la fel
+       (dacă vrei să le elimini, o poți face) */
+    .offer-popup {
+      position: fixed;
+      bottom: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f04e31;
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      z-index: 9999;
+      width: 300px;
+      text-align: center;
+      transition: bottom 0.8s ease;
+    }
+    .offer-popup.show {
+      bottom: 30px;
+    }
+    .offer-popup h3 {
+      margin-bottom: 10px;
+      font-size: 1.5em;
+    }
+    .offer-popup p {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+    .offer-popup .close-btn {
+      background: #fff;
+      color: #f04e31;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .offer-popup .close-btn:hover {
+      background: #eee;
+    }
+
+    .added-popup {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f04e31;
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      z-index: 10000;
+      width: 300px;
+      text-align: center;
+      transition: top 0.8s ease;
+    }
+    .added-popup.show {
+      top: 30px;
+    }
+    .added-popup h3 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+    .added-popup p {
+      font-size: 1.1em;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="header-top">
-      <!-- Logo stânga -->
-      <a href="index.html">
+      <a href="index.html" class="logo-link">
         <img src="logonou.jpg" alt="Gorilla Logo" class="gorilla-logo">
       </a>
-      <!-- Titlu centru -->
-      <h1 class="header-title">The story behind FDA Underwear</h1>
-      <!-- Coș dreapta -->
+      <h1>FDA Underwear - Shop</h1>
       <a class="cart-icon" href="cart.html">
-        🛒 Coș
+        🛒 Coș (<span id="cart-count">0</span>)
       </a>
     </div>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
         <li><a href="shop.html">Shop</a></li>
+        <li><a href="About.html">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <div class="about-container">
-    <h2>Despre Noi</h2>
-    <!-- Un singur paragraf, conținând tot textul -->
-    <p>
-      FDA Underwear s-a născut din pasiunea pentru libertatea de expresie și dorința de a aduce culoare în viața de zi cu zi. Ideea a prins contur pe străzile unui cartier agitat, unde graffiti-ul și muzica hip-hop ne inspirau să ne depășim limitele. Am vrut să creăm mai mult decât simple articole vestimentare: am vrut să spunem o poveste, să oferim o atitudine. Fiecare pereche de chiloți este desenată cu gândul la vibe-ul stradal, la energia care se simte între blocuri și arta urbană. Am experimentat cu culori îndrăznețe, modele nebune și materiale care să reziste la orice provocare de zi cu zi. Prietenii ne-au încurajat, graffiti-ul ne-a motivat, iar clienții noștri ne-au arătat că există mereu loc de inovație. În timp, FDA Underwear a devenit un simbol al celor care nu se tem să iasă din tipare și să-și poarte stilul cu mândrie. De la primele schițe pe pereții cartierului, până la lansarea primelor colecții, ne-am păstrat spiritul rebel și autentic. Astăzi, suntem mai mult decât un brand: suntem o comunitate de oameni liberi, creativi și mereu în mișcare. FDA Underwear înseamnă confort, originalitate și puterea de a-ți trăi povestea pe stradă, exact așa cum simți.
-    </p>
+  <section class="products">
+    <!-- Produs 1 -->
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="SPHYNX PYRAMIDS">
+      <h2>SPHYNX PYRAMIDS</h2>
+      <p>Comfortable and stylish.</p>
+      <p class="product-price">110 RON</p>
+      <button onclick="window.location.href='product1.html'">Vizualizează produs</button>
+    </div>
+    <!-- Produs 2 -->
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza2.jpeg" alt="THE ZAZA KINGDOM">
+      <h2>THE ZAZA KINGDOM</h2>
+      <p>Comfortable and stylish.</p>
+      <p class="product-price">110 RON</p>
+      <button onclick="window.location.href='product2.html'">Vizualizează produs</button>
+    </div>
+    <!-- Produs 3 -->
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza3.jpeg" alt="MONEY RAIN">
+      <h2>MONEY RAIN</h2>
+      <p>Comfortable and stylish.</p>
+      <p class="product-price">110 RON</p>
+      <button onclick="window.location.href='product3.html'">Vizualizează produs</button>
+    </div>
+    <!-- Produs 4 -->
+    <div class="product-card">
+      <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza4.jpeg" alt="RIO DE JANEIRO">
+      <h2>RIO DE JANEIRO</h2>
+      <p>Comfortable and stylish.</p>
+      <p class="product-price">110 RON</p>
+      <button onclick="window.location.href='product4.html'">Vizualizează produs</button>
+    </div>
+  </section>
+
+  <div class="banner">
+    THE BEST UNDERWEAR
   </div>
 
-  <div class="about-banner">
-    Thanks you for trusting us !
+  <!-- Pop-up ofertă la 7 secunde (jos) - opțional -->
+  <div class="offer-popup" id="offerPopup">
+    <h3>Ofertă Specială!</h3>
+    <p>2 perechi la 180 de lei!</p>
+    <button class="close-btn" onclick="hideOffer()">Închide</button>
   </div>
+
+  <!-- Pop-up add to cart (sus) - opțional, dacă mai vrei să-l păstrezi -->
+  <div class="added-popup" id="addToCartPopup">
+    <h3>Produs adăugat în coș!</h3>
+    <p id="added-product-name"></p>
+  </div>
+
+  <script>
+    // Afișează numărul total de produse (suma cantităților)
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let totalQuantity = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+      document.getElementById("cart-count").textContent = totalQuantity;
+    }
+
+    let popupInterval = null;
+    function showOffer() {
+      const popup = document.getElementById("offerPopup");
+      popup.classList.add("show");
+    }
+    function hideOffer() {
+      const popup = document.getElementById("offerPopup");
+      popup.classList.remove("show");
+    }
+
+    window.onload = function() {
+      updateCartCount();
+      // La fiecare 7 secunde, pop-up ofertă
+      popupInterval = setInterval(showOffer, 15000);
+    }
+  </script>
 </body>
 </html>
