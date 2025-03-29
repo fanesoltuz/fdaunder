@@ -1,170 +1,217 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>FDA Underwear - Contact</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - FDA Underwear</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Bangers', cursive;
-            background: url("graffiti.jpg") center/cover no-repeat fixed;
-            color: #fff;
-        }
+    body {
+      font-family: 'Bangers', cursive;
+      background: url("graffiti.jpg") center/cover no-repeat fixed;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
 
-        header {
-            background-color: rgba(30, 30, 30, 0.95);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            text-align: center;
-        }
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .gorilla-logo {
-            width: 70px;
-            height: auto;
-            cursor: pointer;
-        }
-        .header-title {
-            font-size: 2em;
-        }
-        .cart-icon {
-            background: #f04e31;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .cart-icon:hover {
-            background: #c63a24;
-        }
+    header {
+      background-color: rgba(255, 255, 255, 0.9); /* Set header background to white with opacity */
+      color: black; /* Set title text color to black */
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      text-align: center;
+    }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        nav ul li a:hover {
-            color: #f04e31;
-        }
+    .header-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+    }
 
-        .contact-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: rgba(30, 30, 30, 0.95);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-        .contact-container h2 {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-        .contact-container form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .contact-container input, .contact-container textarea {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 1.1em;
-            width: 100%;
-            outline: none;
-        }
-        .contact-container button {
-            padding: 12px;
-            background: #f04e31;
-            color: white;
-            border: none;
-            font-size: 1.3em;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        .contact-container button:hover {
-            background: #c63a24;
-            transform: scale(1.05);
-        }
+    .gorilla-logo {
+      width: 70px;
+      cursor: pointer;
+    }
 
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .social-icons a {
-            font-size: 2.5em;
-            color: white;
-            transition: transform 0.3s, color 0.3s;
-        }
-        .social-icons a:hover {
-            color: #f04e31;
-            transform: scale(1.2);
-        }
-    </style>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    .cart-icon {
+      background: #f04e31;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .contact-box {
+      max-width: 80%; /* Wider contact box */
+      margin: 50px auto;
+      background: black;
+      color: white;
+      padding: 60px;
+      border-radius: 10px;
+      border: 2px solid white;
+    }
+
+    .contact-box h2 {
+      font-size: 3em; /* Larger title */
+      margin-bottom: 20px;
+    }
+
+    .contact-box p {
+      font-size: 1.6em; /* Larger text inside the box */
+    }
+
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column; /* Allows footer to stack the elements */
+      gap: 20px; /* Increased gap between first and second row */
+    }
+
+    .footer a img {
+      width: 60px;
+      transition: transform 0.3s;
+    }
+
+    .footer a img:hover {
+      transform: scale(1.1);
+    }
+
+    .footer .powered-by {
+      font-size: 1.2em;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px; /* Increased space between icons */
+    }
+
+    .footer .powered-by span {
+      font-weight: bold;
+      color: #f04e31;
+    }
+
+    .footer .powered-by a {
+      color: #f04e31;
+      text-decoration: none;
+    }
+
+    .footer .powered-by a:hover {
+      text-decoration: underline;
+    }
+
+    .footer .first-row {
+      display: flex;
+      justify-content: center;
+      gap: 50px; /* Increased space between icons */
+    }
+
+    .footer .second-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* Smaller gap for second row */
+    }
+
+    .footer .second-row a img {
+      width: 30px; /* Smaller icons for the second row */
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: red;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.5em;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Increased the font size of h1 in the header */
+    h1 {
+      font-size: 3.2em; /* Increased from 3em to 3.2em */
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-top">
-            <a href="index.html">
-                <img src="logonou.jpg" alt="Gorilla Logo" class="gorilla-logo">
-            </a>
-            <h1 class="header-title">Contact FDA Underwear</h1>
-            <a class="cart-icon" href="cart.html">🛒 Coș</a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <div class="contact-container">
-        <h2>Contactează-ne</h2>
-        <form action="procesare_formular.php" method="post">
-            <input type="text" name="nume" placeholder="Nume" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <textarea name="mesaj" rows="5" placeholder="Mesaj" required></textarea>
-            <button type="submit">Trimite</button>
-        </form>
-        <div class="social-icons">
-            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
-            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-        </div>
+  <header>
+    <div class="header-top">
+      <a href="index.html"><img src="logonou.jpg" alt="Gorilla Logo" class="gorilla-logo"></a>
+      <h1>CONTACT US</h1> <!-- Updated header title -->
+      <a class="cart-icon" href="cart.html"> 🛒 <span id="cart-count">0</span> </a>
     </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="about-banner">
-        Stay connected with FDA Underwear!
+  <div class="contact-box">
+    <h2>Contact Us</h2>
+    <p>Need help? Have questions? Reach out to us!</p>
+    <p>📧 fdaunderwear@yahoo.com</p>
+    <p>📞 +40 727 757 960</p>
+    <p>📸 @fda_underwear</p>
+  </div>
+
+  <div class="footer">
+    <div class="first-row">
+      <a href="https://www.instagram.com/fda_underwear/" target="_blank"><img src="insta.png" alt="Instagram"></a>
+      <a href="mailto:fdaunderwear@yahoo.com"><img src="email.png" alt="Email"></a>
+      <a href="#" onclick="showPopup()"><img src="phone.png" alt="Phone"></a>
+      <a href="https://www.tiktok.com/@fda.underwear?_t=ZN-8v5Q9mjyRlO&_r=1" target="_blank"><img src="tiktok.avif" alt="TikTok"></a>
     </div>
+    <div class="powered-by">
+      <p>Powered By</p>
+      <div class="second-row">
+        <a href="https://www.instagram.com/2stefan.soltuz5/" target="_blank"><img src="insta.png" alt="Instagram"> @2stefan.soltuz5</a>
+        <a href="https://www.instagram.com/__mihneaserban__/" target="_blank"><img src="insta.png" alt="Instagram"> @__mihneaserban__</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup" id="phone-popup">📱 +40 727 757 960</div>
+
+  <script>
+    function showPopup() {
+      let popup = document.getElementById("phone-popup");
+      popup.style.display = "block";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 15000);
+    }
+  </script>
 </body>
 </html>
