@@ -232,6 +232,20 @@
     <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/cutiifda/cutie4.jpeg" alt="Slider Image 4">
   </div>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let currentIndex = 0;
+      const images = document.querySelectorAll(".slider img");
+      const totalImages = images.length;
+      function changeImage() {
+        images[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % totalImages;
+        images[currentIndex].classList.add("active");
+      }
+      setInterval(changeImage, 3000);
+    });
+  </script>
+
   <section class="products">
     <div class="product-card">
       <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="Model 1">
