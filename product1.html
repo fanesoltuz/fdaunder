@@ -7,20 +7,21 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-    body {
+   body {
   font-family: 'Bangers', cursive;
-  background: #000 url('background/sphynx.jpg') no-repeat center center fixed;
+  background: #000 url('background/sphynx.jpg') no-repeat center center;
   background-size: cover;
   color: #fff;
   margin: 0;
   padding: 0;
 }
 
-/* Fix pentru mobil */
+/* Ajustări pentru mobil */
 @media (max-width: 768px) {
   body {
+    background-size: cover;
+    background-position: top center;
     background-attachment: scroll;
-    background-size: contain;
   }
 }
     
