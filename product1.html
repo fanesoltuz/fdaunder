@@ -8,13 +8,22 @@
     @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
     body {
-      font-family: 'Bangers', cursive;
-      background: url('background/sphynx.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-    }
+  font-family: 'Bangers', cursive;
+  background: #000 url('background/sphynx.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fix pentru mobil */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+    background-size: contain;
+  }
+}
+    
     header {
       background-color: #1e1e1e;
       padding: 20px;
