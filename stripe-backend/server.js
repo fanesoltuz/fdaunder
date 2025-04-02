@@ -3,7 +3,7 @@ const Stripe = require('stripe');
 const cors = require('cors');
 
 const app = express();
-const stripe = Stripe('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'); // Cheie de test Stripe
+const stripe = Stripe('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'); // Cheie de test Stripe
 
 app.use(cors());
 app.use(express.json());
