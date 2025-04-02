@@ -310,7 +310,7 @@
     <!-- Element Stripe card -->
     <div id="card-element"><!-- Stripe.js va monta elementul de card aici --></div>
 
-    <button onclick="payWithCard()">Plătește cu cardul</button> 
+    <button onclick="payWithCard()">Plătește cu cardul</button>
     <br><br>
     <button onclick="submitOrder()">Trimite Comanda (Ramburs)</button>
   </div>
@@ -461,8 +461,72 @@
       .catch(() => alert("A apărut o eroare."));
   }
 
-  
+  // Plată cu cardul (Stripe)
+  async function payWithCard() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (!cart.length) {
+    alert("Coșul e gol!");
+    return;
+  }
 
+  let total = calcTotalWithDiscount(cart); // Calculează totalul cu discount
+  console.log('Total calculat:', total); // Verifică totalul
+
+  try {
+    // Trimite cererea la backend pentru a crea un PaymentIntent
+    const resp = await fetch('http://localhost:3001/api/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ total })
+    });
+
+    if (!resp.ok) {
+      throw new Error('Eroare la conectarea cu serverul');
+    }
+
+    const data = await resp.json();
+    console.log('Răspuns de la backend:', data); // Verifică răspunsul
+    if (!data.clientSecret) {
+      alert("Eroare la crearea PaymentIntent!");
+      return;
+    }
+
+    const clientSecret = data.clientSecret;
+    console.log('Client Secret:', clientSecret); // Verifică clientSecret
+
+    // Confirmă plata cu Stripe
+    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          name: document.getElementById("firstName").value + " " + document.getElementById("lastName").value,
+          email: document.getElementById("email").value
+        }
+      }
+    });
+
+    if (error) {
+      console.error('Eroare la plată:', error); // Loghează eroarea
+      alert("Eroare la plată: " + error.message);
+    } else {
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
+        console.log('Plată reușită:', paymentIntent); // Loghează plata reușită
+        alert("Plată efectuată cu succes! ID: " + paymentIntent.id);
+
+        // Golește coșul după plată
+        localStorage.removeItem("cart");
+        loadCartItems();
+      }
+    }
+  } catch (err) {
+    console.error('Eroare la conectarea cu serverul de plată:', err); // Loghează eroarea
+    alert("Eroare la conectarea cu serverul de plată.");
+  }
+}
+  window.onload = function() {
+    loadCartItems();
+    initStripeElements(); // inițializăm Stripe Elements
+  }
 </script>
 </body>
 </html>
