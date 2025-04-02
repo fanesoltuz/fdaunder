@@ -474,8 +474,8 @@
 
   try {
     // Trimite cererea la backend pentru a crea un PaymentIntent
-    const resp = await fetch('https://stripe-backend-fdaunder.onrender.com/api/create-payment-intent', 
-{
+    const resp = await fetch('https://fdaunder.onrender.com/api/create-payment-intent', {
+
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ total })
