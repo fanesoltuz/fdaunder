@@ -6,7 +6,7 @@ require('dotenv').config(); // încarcă .env dacă rulezi local
 const app = express();
 
 // Folosește cheia Stripe din .env sau scrisă direct (recomand .env)
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_51R7J1IK9KfmQZ4LdXEZ2hYZZ9P8syfkITQjoiH60MvjSlK2hxVG8uU7GKsHj3vZSE3q2is8eI1T6vmihPAtRKFzt00fbVUMFB0');
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY || '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');
 
 app.use(cors());
 app.use(express.json());
