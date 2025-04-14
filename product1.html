@@ -7,24 +7,24 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-   body {
-  font-family: 'Bangers', cursive;
-  background: #000 url('background/sphynx.jpg') no-repeat center center;
-  background-size: cover;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-}
+    body {
+      font-family: 'Bangers', cursive;
+      background: #000 url('background/sphynx.jpg') no-repeat center center;
+      background-size: cover;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
 
-/* Ajustări pentru mobil */
-@media (max-width: 768px) {
-  body {
-    background-size: cover;
-    background-position: top center;
-    background-attachment: scroll;
-  }
-}
-    
+    /* Ajustări pentru mobil */
+    @media (max-width: 768px) {
+      body {
+        background-size: cover;
+        background-position: top center;
+        background-attachment: scroll;
+      }
+    }
+
     header {
       background-color: #1e1e1e;
       padding: 20px;
@@ -33,22 +33,26 @@
       top: 0;
       z-index: 1000;
     }
+
     .header-top {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 20px;
     }
+
     .gorilla-logo {
       width: 90px;
       cursor: pointer;
     }
+
     .header-title {
       margin: 0;
       font-size: 2em;
       color: #fff;
       text-align: center;
     }
+
     .cart-icon {
       background: #f04e31;
       color: #fff;
@@ -60,6 +64,7 @@
       text-align: center;
       position: relative;
     }
+
     .cart-icon:hover {
       background: #c63a24;
     }
@@ -72,11 +77,13 @@
       margin-top: 10px;
       padding: 0;
     }
+
     nav ul li a {
       text-decoration: none;
       color: #fff;
       font-weight: bold;
     }
+
     nav ul li a:hover {
       color: #f04e31;
     }
@@ -89,6 +96,7 @@
       gap: 20px;
       padding: 20px;
     }
+
     .product-image {
       flex: 1;
       min-width: 300px;
@@ -96,10 +104,12 @@
       justify-content: center;
       align-items: center;
     }
+
     .product-image img {
       max-width: 100%;
       border-radius: 10px;
     }
+
     .product-details {
       flex: 1;
       min-width: 300px;
@@ -108,15 +118,24 @@
       justify-content: center;
       gap: 20px;
     }
-    .product-details h2 {
+
+    .product-name-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: inline-block;
       font-size: 2em;
       margin-bottom: 10px;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
     }
+
     .size-select {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
+
     select {
       padding: 10px;
       font-size: 1em;
@@ -125,6 +144,7 @@
       background: #333;
       color: #fff;
     }
+
     .add-to-cart-btn {
       padding: 10px 20px;
       font-size: 1.1em;
@@ -135,11 +155,11 @@
       cursor: pointer;
       transition: background 0.3s;
     }
+
     .add-to-cart-btn:hover {
       background: #c63a24;
     }
 
-    /* Pop-up roșu sus (added-popup) */
     .added-popup {
       position: fixed;
       top: -200px;
@@ -155,13 +175,16 @@
       text-align: center;
       transition: top 0.8s ease;
     }
+
     .added-popup.show {
       top: 30px;
     }
+
     .added-popup h3 {
       margin-bottom: 10px;
       font-size: 1.3em;
     }
+
     .added-popup p {
       font-size: 1.1em;
       margin-bottom: 10px;
@@ -175,7 +198,6 @@
         <img src="logonou.jpg" alt="gorilla.jpg" class="gorilla-logo">
       </a>
       <h1 class="header-title">FDA Underwear</h1>
-      <!-- Coș cu număr de produse -->
       <a class="cart-icon" href="cart.html">
         🛒 Coș (<span id="cart-count">0</span>)
       </a>
@@ -195,7 +217,7 @@
       <img src="https://raw.githubusercontent.com/fanesoltuz/fdaunder/main/pozefda/poza1.jpeg" alt="SPHYNX PYRAMIDS">
     </div>
     <div class="product-details">
-      <h2>SPHYNX PYRAMIDS</h2>
+      <h2 class="product-name-box">SPHYNX PYRAMIDS</h2>
       <div class="size-select">
         <label for="sizeSelect">Selectează mărimea:</label>
         <select id="sizeSelect">
@@ -203,14 +225,12 @@
           <option value="M">M</option>
           <option value="L">L</option>
           <option value="XL">XL</option>
-          
         </select>
       </div>
       <button class="add-to-cart-btn" onclick="addToCart()">Adaugă în coș</button>
     </div>
   </div>
 
-  <!-- Pop-up roșu (sus) -->
   <div class="added-popup" id="addToCartPopup">
     <h3>Produs adăugat în coș!</h3>
     <p id="added-product-name"></p>
@@ -242,7 +262,6 @@
       const productPrice = "110 RON";
       const size = document.getElementById("sizeSelect").value;
 
-      // căutăm item cu același nume + mărime
       let existingProduct = cart.find(item => item.name === productName && item.size === size);
 
       if (existingProduct) {
