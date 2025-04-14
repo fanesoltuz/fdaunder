@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>FDA Underwear</title>
   <style>
-    /* Import font Bangers */
-    @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-
     /* Resetări de bază */
     * {
       margin: 0;
@@ -15,10 +12,10 @@
       box-sizing: border-box;
     }
 
-    /* Body cu fundal graffiti și font Bangers */
+    /* Body cu fundal graffiti și font clasic */
     body {
-      font-family: 'Bangers', cursive;
-      font-size: 1.2em; /* Mărim puțin fontul pentru lizibilitate */
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.2em;
       background: url("graffiti.jpg") center/cover no-repeat fixed;
       color: #fff;
       margin: 0;
@@ -36,7 +33,6 @@
       text-align: center;
     }
 
-    /* Prima linie din header: logo (stânga), titlu (centru), coș (dreapta) */
     .header-top {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -47,7 +43,7 @@
       width: 70px;
       height: auto;
       cursor: pointer;
-      margin-top: 5px; /* ușor coborât */
+      margin-top: 5px;
     }
     .header-top h1 {
       margin: 0;
@@ -69,7 +65,6 @@
       background: #c63a24;
     }
 
-    /* Meniu de navigație sub header-top */
     nav ul {
       list-style: none;
       display: flex;
@@ -112,7 +107,6 @@
       opacity: 1;
     }
 
-    /* Secțiunea de produse */
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -192,7 +186,6 @@
       transform: scale(1.1);
     }
 
-    /* Footer */
     footer {
       background: #333;
       color: white;
@@ -285,3 +278,9 @@
       </a>
     </div>
   </section>
+
+  <footer>
+    &copy; 2025 FDA Underwear. All rights reserved.
+  </footer>
+</body>
+</html>
