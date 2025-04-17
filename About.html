@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>FDA Underwear - About</title>
   <style>
+    /* Reset */
     * {
       margin: 0;
       padding: 0;
@@ -12,15 +13,18 @@
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: url("graffiti.jpg") center/cover no-repeat fixed;
+      font-family: Arial, sans-serif;
+      font-size: 1.2em;
+      background-color: #000;
       color: #fff;
       margin: 0;
       padding: 0;
     }
 
+    /* ====== HEADER ====== */
     header {
       background-color: #fff;
+      color: #000;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
       padding: 20px;
       position: sticky;
@@ -33,7 +37,7 @@
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 20px;
+      margin-bottom: 10px;
     }
 
     .gorilla-logo {
@@ -45,7 +49,7 @@
 
     .header-title {
       margin: 0;
-      font-size: 2em;
+      font-size: 2.5em;
       color: #000;
       text-align: center;
     }
@@ -59,6 +63,7 @@
       font-weight: bold;
       transition: background 0.3s;
       text-align: center;
+      font-size: 1em;
     }
 
     .cart-icon:hover {
@@ -67,11 +72,11 @@
 
     nav ul {
       list-style: none;
-      display: flex;
+      padding: 0;
+      display: inline-flex;
       justify-content: center;
       gap: 20px;
       margin: 0;
-      padding: 0;
     }
 
     nav ul li a {
@@ -85,20 +90,21 @@
       color: #f04e31;
     }
 
+    /* ====== ABOUT SECTION ====== */
     .about-container {
-      max-width: 800px;
-      margin: 30px auto;
-      background: rgba(30, 30, 30, 0.9);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      padding: 20px;
+      max-width: 1000px;
+      margin: 40px auto;
+      background: rgba(30, 30, 30, 0.95);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 30px;
       text-align: left;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .about-container h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       font-size: 1.8em;
       color: #fff;
     }
@@ -106,7 +112,7 @@
     .about-container p {
       font-size: 1.2em;
       color: #ddd;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       text-align: justify;
     }
 
@@ -125,12 +131,12 @@
 <body>
   <header>
     <div class="header-top">
-      <a href="index.html">
+      <a href="index.html" class="logo-link">
         <img src="logonou.jpg" alt="Gorilla Logo" class="gorilla-logo">
       </a>
       <h1 class="header-title">The story behind FDA Underwear</h1>
       <a class="cart-icon" href="cart.html">
-        🛒 Coș
+        🛒 Coș (<span id="cart-count">0</span>)
       </a>
     </div>
     <nav>
