@@ -187,29 +187,55 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 0;
-      }
+   @media (max-width: 768px) {
+  .header-top {
+    grid-template-columns: auto 1fr auto;
+    text-align: center;
+    gap: 10px;
+  }
 
-      header h1 {
-        font-size: 2em;
-      }
+  header h1 {
+    font-size: 2em;
+  }
 
-      .contact-box {
-        padding: 30px 20px;
-      }
+  .gorilla-logo {
+    width: 70px;
+  }
 
-      .contact-box p {
-        font-size: 1.2em;
-      }
+  .cart-icon {
+    font-size: 0.9em;
+    padding: 8px 12px;
+  }
 
-      .footer .first-row a img,
-      .footer .second-row a img {
-        width: 40px;
-        height: 40px;
-      }
-    }
+  body {
+    font-size: 1em;
+  }
+
+  .contact-box {
+    padding: 30px 20px;
+  }
+
+  .contact-box h2 {
+    font-size: 2em;
+  }
+
+  .contact-box p {
+    font-size: 1.2em;
+  }
+
+  .footer .first-row a img,
+  .footer .second-row a img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer .powered-by {
+    font-size: 1em;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
   </style>
 </head>
 <body>
