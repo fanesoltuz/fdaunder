@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us - FDA Underwear</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-
     * {
       margin: 0;
       padding: 0;
@@ -15,72 +13,100 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: url("graffiti.jpg") center/cover no-repeat fixed;
+      font-size: 1.2em;
+      background-color: #000;
       color: white;
       text-align: center;
-      padding: 20px;
+      padding: 0;
     }
 
     header {
-      background-color: rgba(255, 255, 255, 0.9); /* Set header background to white with opacity */
-      color: black; /* Set title text color to black */
+      width: 100%;
+      background-color: #fff;
+      color: #000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
       padding: 20px;
       position: sticky;
       top: 0;
       z-index: 1000;
-      text-align: center;
     }
 
     .header-top {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
+      margin-bottom: 10px;
     }
 
     .gorilla-logo {
-      width: 70px;
+      width: 90px;
+      height: auto;
+      margin-top: 5px;
       cursor: pointer;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #000;
+      text-align: center;
     }
 
     .cart-icon {
       background: #f04e31;
-      color: white;
+      color: #fff;
       padding: 10px 15px;
       border-radius: 50px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 1em;
+      transition: background 0.3s;
+      text-align: center;
+    }
+
+    .cart-icon:hover {
+      background: #c63a24;
     }
 
     nav ul {
       list-style: none;
-      display: flex;
+      padding: 0;
+      display: inline-flex;
       justify-content: center;
       gap: 20px;
+      margin: 0;
     }
 
     nav ul li a {
       text-decoration: none;
-      color: #333;
+      color: #000;
       font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #f04e31;
     }
 
     .contact-box {
-      max-width: 80%; /* Wider contact box */
+      max-width: 1000px;
       margin: 50px auto;
-      background: black;
+      background: rgba(30, 30, 30, 0.95);
       color: white;
       padding: 60px;
       border-radius: 10px;
-      border: 2px solid white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      line-height: 1.7;
     }
 
     .contact-box h2 {
-      font-size: 3em; /* Larger title */
+      font-size: 3em;
       margin-bottom: 20px;
     }
 
     .contact-box p {
-      font-size: 1.6em; /* Larger text inside the box */
+      font-size: 1.6em;
+      margin-bottom: 15px;
     }
 
     .footer {
@@ -89,12 +115,15 @@
       margin-top: 20px;
       display: flex;
       justify-content: center;
-      flex-direction: column; /* Allows footer to stack the elements */
-      gap: 20px; /* Increased gap between first and second row */
+      flex-direction: column;
+      gap: 20px;
     }
 
     .footer a img {
       width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
       transition: transform 0.3s;
     }
 
@@ -108,17 +137,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px; /* Increased space between icons */
-    }
-
-    .footer .powered-by span {
-      font-weight: bold;
-      color: #f04e31;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     .footer .powered-by a {
       color: #f04e31;
       text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .footer .powered-by a:hover {
@@ -128,17 +157,20 @@
     .footer .first-row {
       display: flex;
       justify-content: center;
-      gap: 50px; /* Increased space between icons */
+      gap: 50px;
+      flex-wrap: wrap;
     }
 
     .footer .second-row {
       display: flex;
       justify-content: center;
-      gap: 20px; /* Smaller gap for second row */
+      gap: 20px;
     }
 
     .footer .second-row a img {
-      width: 30px; /* Smaller icons for the second row */
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
     }
 
     .popup {
@@ -155,46 +187,37 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Increased the font size of h1 in the header */
-    h1 {
-      font-size: 3.2em; /* Increased from 3em to 3.2em */
-    }
-
     @media (max-width: 600px) {
       body {
-        padding: 10px;
+        padding: 0;
       }
 
-      h1 {
+      header h1 {
         font-size: 2em;
       }
 
       .contact-box {
-        padding: 20px;
+        padding: 30px 20px;
       }
 
       .contact-box p {
-        font-size: 1.2em; /* Reduce dimensiunea textului din chenarul principal */
+        font-size: 1.2em;
       }
 
-      .footer {
-        padding: 10px;
-      }
-
-      .footer .first-row a img, .footer .second-row a img {
-        width: 40px; /* Micsorează iconițele din footer pe ecrane mici */
+      .footer .first-row a img,
+      .footer .second-row a img {
+        width: 40px;
+        height: 40px;
       }
     }
-
-
   </style>
 </head>
 <body>
   <header>
     <div class="header-top">
       <a href="index.html"><img src="logonou.jpg" alt="Gorilla Logo" class="gorilla-logo"></a>
-      <h1>CONTACT US</h1> <!-- Updated header title -->
-      <a class="cart-icon" href="cart.html"> 🛒 <span id="cart-count">0</span> </a>
+      <h1>CONTACT US</h1>
+      <a class="cart-icon" href="cart.html"> 🛒 Coș (<span id="cart-count">0</span>) </a>
     </div>
     <nav>
       <ul>
