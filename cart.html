@@ -591,10 +591,11 @@
     alert("Eroare la conectarea cu serverul de plată.");
   }
 }
-  window.onload = function() {
-    loadCartItems();
-    initStripeElements(); // inițializăm Stripe Elements
-  }
+ document.addEventListener("DOMContentLoaded", function () {
+  loadCartItems();
+  initStripeElements(); // inițializăm Stripe Elements
+});
+
 </script>
 </body>
 </html>
