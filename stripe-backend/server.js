@@ -113,7 +113,7 @@ app.post('/api/create-awb', async (req, res) => {
     console.error('❌ Eroare creare AWB:', error.response?.data || error.message);
     res.status(500).send({ error: 'Eroare la crearea AWB-ului' });
   }
-});
+ });
 
 // Pornim serverul
 const PORT = process.env.PORT || 3001;
