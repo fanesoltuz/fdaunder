@@ -1,41 +1,41 @@
-// server.js FINAL - Stripe + SameDay AWB Generator
-
 const express = require('express');
 const cors = require('cors');
 const Stripe = require('stripe');
 const axios = require('axios');
-require('dotenv').config(); // pentru variabilele din .env
+require('dotenv').config(); // pentru variabilele de mediu .env
 
 const app = express();
 
-// Stripe config
+// Stripe
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY || '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');
 
 app.use(cors());
 app.use(express.json());
 
-// Health check
+// Health Check
 app.get('/api/health', (req, res) => {
-  res.send({ status: 'Serverul funcționează corect 🚀' });
+  res.send({ status: '✅ Serverul funcționează' });
 });
 
-// Stripe - Creare PaymentIntent
+// Endpoint pentru plata cu Stripe
 app.post('/api/create-payment-intent', async (req, res) => {
   const { total } = req.body;
+
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: total * 100,
+      amount: total * 100, // Stripe cere în baniți (100 RON = 10000)
       currency: 'ron',
       payment_method_types: ['card'],
     });
+
     res.send({ clientSecret: paymentIntent.client_secret });
   } catch (err) {
-    console.error('Eroare la crearea PaymentIntent:', err);
+    console.error('❌ Eroare la crearea PaymentIntent:', err.message);
     res.status(500).send({ error: 'Eroare la procesarea plății' });
   }
 });
 
-// SameDay - Creare AWB
+// Endpoint pentru crearea AWB
 app.post('/api/create-awb', async (req, res) => {
   const {
     firstName,
@@ -54,80 +54,75 @@ app.post('/api/create-awb', async (req, res) => {
     paymentType
   } = req.body;
 
+  const awbData = {
+    parcels: [{ weight: 1, envelope: false }],
+    service: { id: 7, name: "NextDay" }, // id 7 - serviciu livrare rapidă
+    payer: { type: paymentType === "CARD" ? 1 : 2 }, // 1 = expeditor plătește, 2 = destinatar
+    receiver: {
+      name: `${firstName} ${lastName}`,
+      contact_person: `${firstName} ${lastName}`,
+      phone: phone,
+      email: email,
+      address: {
+        street: street,
+        number: houseNumber,
+        block: building,
+        entrance: staircase,
+        floor: floor,
+        apartment: apartment,
+        city: city,
+        county: county,
+        postal_code: postalCode,
+        country: "RO"
+      }
+    },
+    sender: {
+      name: "FDA UNDERWEAR",
+      contact_person: "FDA UNDERWEAR",
+      phone: "0727757960",
+      email: "fdaunderwear@yahoo.com",
+      address: {
+        street: "Strada Crizantemelor",
+        number: "7",
+        block: "",
+        entrance: "",
+        floor: "",
+        apartment: "",
+        city: "București",
+        county: "Sector 5",
+        postal_code: "051831",
+        country: "RO"
+      }
+    },
+    cash_on_delivery: paymentType === "CASH" ? true : false
+  };
+
+  console.log('📦 AWB - payload de trimis la Sameday:', JSON.stringify(awbData, null, 2));
+
   try {
-    // 1. Login SameDay
-    const loginResponse = await axios.post('https://api.sameday.ro/login', {
-      username: 'fdaunderwear@yahoo.com',
-      password: 'Eliza1975!'
-    }, {
+    const response = await axios.post('https://api.sameday.ro/api/client_awb', awbData, {
+      auth: {
+        username: 'fdaunderwear@yahoo.com', // user API Sameday
+        password: 'Eliza1975!', // parola API Sameday
+      },
       headers: { 'Content-Type': 'application/json' }
     });
 
-    const token = loginResponse.data.token;
-    console.log('Token SameDay obtinut:', token);
+    console.log('✅ AWB creat cu succes:', response.data);
+    res.send({ message: 'AWB creat!', data: response.data });
 
-    // 2. Creare AWB cu token
-    const awbResponse = await axios.post('https://api.sameday.ro/awb', {
-      parcels: [
-        { weight: 1, envelope: false }
-      ],
-      service: {
-        id: 7,
-        name: 'NextDay'
-      },
-      payer: {
-        type: paymentType === 'CARD' ? 1 : 2
-      },
-      receiver: {
-        name: `${firstName} ${lastName}`,
-        contact_person: `${firstName} ${lastName}`,
-        phone,
-        email,
-        address: {
-          street,
-          number: houseNumber,
-          block: building,
-          entrance: staircase,
-          floor,
-          apartment,
-          city,
-          county,
-          postal_code: postalCode,
-          country: 'RO'
-        }
-      },
-      sender: {
-        name: 'FDA UNDERWEAR',
-        contact_person: 'FDA UNDERWEAR',
-        phone: '0727757960',
-        email: 'fdaunderwear@yahoo.com',
-        address: {
-          street: 'Strada Crizantemelor',
-          number: '7',
-          city: 'Bucuresti',
-          county: 'Sector 5',
-          postal_code: '051831',
-          country: 'RO'
-        }
-      },
-      cash_on_delivery: paymentType === 'CASH'
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-AUTH-TOKEN': token
-      }
-    });
-
-    console.log('✅ AWB creat:', awbResponse.data);
-    res.send({ message: 'AWB creat cu succes!', data: awbResponse.data });
-
-  } catch (err) {
-    console.error('❌ Eroare la crearea AWB:', err.response ? err.response.data : err.message);
-    res.status(500).send({ error: 'Eroare la crearea AWB' });
+  } catch (error) {
+    if (error.response) {
+      console.error('❌ Eroare răspuns API:', error.response.data);
+      res.status(500).send({ error: error.response.data });
+    } else {
+      console.error('❌ Eroare rețea sau server:', error.message);
+      res.status(500).send({ error: error.message });
+    }
   }
 });
 
-// Pornim serverul
+// Server listen
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Serverul rulează pe portul ${PORT}`);
