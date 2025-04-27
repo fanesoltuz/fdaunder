@@ -1,3 +1,5 @@
+// server.js FINAL - Stripe + SameDay AWB Generator
+
 const express = require('express');
 const cors = require('cors');
 const Stripe = require('stripe');
@@ -6,23 +8,23 @@ require('dotenv').config(); // pentru variabilele din .env
 
 const app = express();
 
-// Stripe
+// Stripe config
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY || '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');
 
 app.use(cors());
 app.use(express.json());
 
-// Verificare dacă serverul merge
+// Health check
 app.get('/api/health', (req, res) => {
   res.send({ status: 'Serverul funcționează corect 🚀' });
 });
 
-// Endpoint pentru crearea unui PaymentIntent
+// Stripe - Creare PaymentIntent
 app.post('/api/create-payment-intent', async (req, res) => {
   const { total } = req.body;
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: total * 100, // Stripe vrea în baniți
+      amount: total * 100,
       currency: 'ron',
       payment_method_types: ['card'],
     });
@@ -33,7 +35,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
   }
 });
 
-// ✅ Endpoint pentru crearea AWB
+// SameDay - Creare AWB
 app.post('/api/create-awb', async (req, res) => {
   const {
     firstName,
@@ -53,75 +55,71 @@ app.post('/api/create-awb', async (req, res) => {
   } = req.body;
 
   try {
-    const awbData = {
+    // 1. Login SameDay
+    const loginResponse = await axios.post('https://api.sameday.ro/login', {
+      username: 'fdaunderwear@yahoo.com',
+      password: 'Eliza1975!'
+    }, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const token = loginResponse.data.token;
+    console.log('Token SameDay obtinut:', token);
+
+    // 2. Creare AWB cu token
+    const awbResponse = await axios.post('https://api.sameday.ro/awb', {
       parcels: [
-        {
-          weight: 1, // 1 kg
-          envelope: false
-        }
+        { weight: 1, envelope: false }
       ],
       service: {
-        id: 7, // Serviciu NextDay 24H
-        name: "NextDay",
+        id: 7,
+        name: 'NextDay'
       },
       payer: {
-        type: paymentType === "CARD" ? 1 : 2, // 1=Plata la expeditor, 2=Plata la destinatar
+        type: paymentType === 'CARD' ? 1 : 2
       },
       receiver: {
         name: `${firstName} ${lastName}`,
         contact_person: `${firstName} ${lastName}`,
-        phone: phone,
-        email: email,
+        phone,
+        email,
         address: {
-          street: street,
+          street,
           number: houseNumber,
           block: building,
           entrance: staircase,
-          floor: floor,
-          apartment: apartment,
-          city: city,
-          county: county,
+          floor,
+          apartment,
+          city,
+          county,
           postal_code: postalCode,
-          country: "RO"
+          country: 'RO'
         }
       },
       sender: {
-        name: "FDA UNDERWEAR",
-        contact_person: "FDA UNDERWEAR",
-        phone: "0727757960",
-        email: "fdaunderwear@yahoo.com",
+        name: 'FDA UNDERWEAR',
+        contact_person: 'FDA UNDERWEAR',
+        phone: '0727757960',
+        email: 'fdaunderwear@yahoo.com',
         address: {
-          street: "Strada Crizantemelor",
-          number: "7",
-          block: "",
-          entrance: "",
-          floor: "",
-          apartment: "",
-          city: "București",
-          county: "Sector 5",
-          postal_code: "051831",
-          country: "RO"
+          street: 'Strada Crizantemelor',
+          number: '7',
+          city: 'Bucuresti',
+          county: 'Sector 5',
+          postal_code: '051831',
+          country: 'RO'
         }
       },
-      cash_on_delivery: paymentType === "CASH" ? true : false
-    };
-
-    const response = await axios.post(
-      'https://api.sameday.ro/api/client_awb',
-      awbData,
-      {
-        auth: {
-          username: 'fdaunderwear@yahoo.com',
-          password: 'Eliza1975!',
-        },
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      cash_on_delivery: paymentType === 'CASH'
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-AUTH-TOKEN': token
       }
-    );
+    });
 
-    console.log('✅ AWB creat:', response.data);
-    res.send({ message: 'AWB creat cu succes!', data: response.data });
+    console.log('✅ AWB creat:', awbResponse.data);
+    res.send({ message: 'AWB creat cu succes!', data: awbResponse.data });
 
   } catch (err) {
     console.error('❌ Eroare la crearea AWB:', err.response ? err.response.data : err.message);
@@ -133,4 +131,4 @@ app.post('/api/create-awb', async (req, res) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Serverul rulează pe portul ${PORT}`);
-} );
+});
