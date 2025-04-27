@@ -96,7 +96,7 @@ app.post('/api/create-awb', async (req, res) => {
       cash_on_delivery: paymentType === "CASH"
     };
 
-    const response = await axios.post('https://api.sameday.ro/api/client_awb', payload, {
+    const response = await axios.post('https://sameday-api.sameday.ro/api/client_awb'', payload, {
       auth: {
         username: 'fdaunderwear@yahoo.com',
         password: 'Eliza1975!'
