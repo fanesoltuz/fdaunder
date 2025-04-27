@@ -1,24 +1,23 @@
-// server.js
-
 const express = require('express');
 const cors = require('cors');
-const Stripe = require('stripe');
 const axios = require('axios');
+const Stripe = require('stripe');
 require('dotenv').config();
 
 const app = express();
 
+// Stripe
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY || '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');
 
 app.use(cors());
 app.use(express.json());
 
-// Health Check
+// Testare server
 app.get('/api/health', (req, res) => {
-  res.send({ status: 'Serverul funcționează corect 🚀' });
+  res.send({ status: 'Serverul funcționează corect ✅' });
 });
 
-// Create PaymentIntent (Stripe)
+// Creare PaymentIntent pentru Stripe
 app.post('/api/create-payment-intent', async (req, res) => {
   const { total } = req.body;
   try {
@@ -28,18 +27,28 @@ app.post('/api/create-payment-intent', async (req, res) => {
       payment_method_types: ['card'],
     });
     res.send({ clientSecret: paymentIntent.client_secret });
-  } catch (err) {
-    console.error('Eroare la crearea PaymentIntent:', err);
-    res.status(500).send({ error: 'Eroare la procesarea plății' });
+  } catch (error) {
+    console.error('❌ Eroare creare PaymentIntent:', error.message);
+    res.status(500).send({ error: 'Eroare procesare plată.' });
   }
 });
 
-// Create AWB (Sameday)
+// Creare AWB la Sameday
 app.post('/api/create-awb', async (req, res) => {
   const {
-    firstName, lastName, phone, email,
-    street, houseNumber, city, county, postalCode,
-    building, staircase, floor, apartment,
+    firstName,
+    lastName,
+    phone,
+    email,
+    street,
+    houseNumber,
+    city,
+    county,
+    postalCode,
+    building,
+    staircase,
+    floor,
+    apartment,
     paymentType
   } = req.body;
 
@@ -48,13 +57,8 @@ app.post('/api/create-awb', async (req, res) => {
       parcels: [
         { weight: 1, envelope: false }
       ],
-      service: {
-        id: 7, // NextDay
-        name: "NextDay",
-      },
-      payer: {
-        type: paymentType === "CARD" ? 1 : 2,
-      },
+      service: { id: 7, name: "NextDay" },
+      payer: { type: paymentType === "CARD" ? 1 : 2 },
       receiver: {
         name: `${firstName} ${lastName}`,
         contact_person: `${firstName} ${lastName}`,
@@ -91,16 +95,16 @@ app.post('/api/create-awb', async (req, res) => {
           country: "RO"
         }
       },
-      cash_on_delivery: paymentType === "CASH"
+      cash_on_delivery: paymentType === "CASH" ? true : false
     };
 
     const response = await axios.post(
-      'https://api.sameday.ro/api/client_awb', // <-- corect aici!
+      'https://sameday-api.sameday.ro/api/client_awb',
       awbData,
       {
         auth: {
-          username: 'fdaunderwear@yahoo.com',
-          password: 'Eliza1975!',
+          username: 'fdaunderwear@yahoo.com', // username cont API
+          password: 'Eliza1975!', // parola cont API
         },
         headers: {
           'Content-Type': 'application/json'
@@ -111,13 +115,13 @@ app.post('/api/create-awb', async (req, res) => {
     console.log('✅ AWB creat:', response.data);
     res.send({ message: 'AWB creat cu succes!', data: response.data });
 
-  } catch (err) {
-    console.error('❌ Eroare creare AWB:', err.response ? err.response.data : err.message);
-    res.status(500).send({ error: 'Eroare la crearea AWB' });
+  } catch (error) {
+    console.error('❌ Eroare creare AWB:', error.response?.data || error.message);
+    res.status(500).send({ error: 'Eroare creare AWB.' });
   }
 });
 
-// Start server
+// Pornim serverul
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Serverul rulează pe portul ${PORT}`);
