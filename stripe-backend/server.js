@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 
 // Stripe
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY || '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');
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY || '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');
 
 app.use(cors());
 app.use(express.json());
